@@ -10,66 +10,66 @@ const id = {
   language: 'Bahasa',
 
   // 1. Corporate Insight
-  menu_ci: 'Corporate Insight',
-  menu_ci_01: 'Executive Overview',
+  menu_ci: 'Wawasan Korporat',
+  menu_ci_01: 'Ringkasan Eksekutif',
 
   // 2. Churn Analysis
-  menu_ch: 'Churn Analysis',
-  menu_ch_01: 'Churn Overview',
-  menu_ch_02: 'Churn Ranking',
-  menu_ch_03: 'Model Performance — Churn',
+  menu_ch: 'Analisis Churn',
+  menu_ch_01: 'Ringkasan Churn',
+  menu_ch_02: 'Peringkat Churn',
+  menu_ch_03: 'Performa Model — Churn',
 
   // 3. Customer Profitability
-  menu_cp: 'Profitability Analysis',
-  menu_cp_01: 'Profitability Overview',
-  menu_cp_02: 'Customer Profitability List',
-  menu_cp_03: 'Model Performance — Profitability',
+  menu_cp: 'Analisis Profitabilitas',
+  menu_cp_01: 'Ringkasan Profitabilitas',
+  menu_cp_02: 'Daftar Profitabilitas Nasabah',
+  menu_cp_03: 'Performa Model — Profitabilitas',
 
   // 4. Customer Segmentation
-  menu_cs: 'Segmentation Analysis',
-  menu_cs_01: 'Segmentation Overview',
-  menu_cs_02: 'Cluster Characteristics & Strategy',
-  menu_cs_03: 'Product Usage Analysis',
-  menu_cs_04: 'Model Performance — Segmentation',
+  menu_cs: 'Analisis Segmentasi',
+  menu_cs_01: 'Ringkasan Segmentasi',
+  menu_cs_02: 'Karakteristik & Strategi Cluster',
+  menu_cs_03: 'Analisis Penggunaan Produk',
+  menu_cs_04: 'Performa Model — Segmentasi',
 
   // 5. CPI Matrix
-  menu_cpi: 'CPI Matrix',
-  menu_cpi_01: 'CPI Matrix Overview',
-  menu_cpi_02: 'HOT TARGET Deep-Dive',
+  menu_cpi: 'Matriks CPI',
+  menu_cpi_01: 'Ringkasan Matriks CPI',
+  menu_cpi_02: 'Deep-Dive HOT TARGET',
 
   // 6. Recommender System
-  menu_rs: 'Recommender System',
-  menu_rs_01: 'Product Recommendations',
-  menu_rs_02: 'Model Performance — Recommender',
+  menu_rs: 'Sistem Rekomendasi',
+  menu_rs_01: 'Rekomendasi Produk',
+  menu_rs_02: 'Performa Model — Rekomendasi',
 
   // 7. Campaign & Strategy Tracking
-  menu_cam: 'Campaign & Strategy',
-  menu_cam_01: 'Business Strategy Registry',
-  menu_cam_02: 'Strategy Assignment & Progress',
-  menu_cam_03: 'Campaign Effectiveness & ROI',
+  menu_cam: 'Kampanye & Strategi',
+  menu_cam_01: 'Registrasi Strategi Bisnis',
+  menu_cam_02: 'Penugasan & Progres Strategi',
+  menu_cam_03: 'Efektivitas Kampanye & ROI',
 
   // 8. Customer 360
   menu_c360: 'Customer 360',
-  menu_c360_01: 'Customer Search & Profile',
+  menu_c360_01: 'Pencarian & Profil Nasabah',
 
   // 9. Alert / Notification Center
-  menu_not: 'Alert Center',
-  menu_not_01: 'Alert Center',
+  menu_not: 'Pusat Notifikasi',
+  menu_not_01: 'Pusat Notifikasi',
 
   // 10. Setup
-  menu_set: 'Setup',
+  menu_set: 'Pengaturan',
   menu_set_01: 'Threshold Tiering Churn',
-  menu_set_02: 'Threshold Tiering Profitability',
-  menu_set_03: 'Recommendation Settings',
-  menu_set_04: 'User & Role Management',
-  menu_set_05: 'Observation & Cost Settings',
-  menu_set_06: 'Notification Rules',
+  menu_set_02: 'Threshold Tiering Profitabilitas',
+  menu_set_03: 'Pengaturan Rekomendasi',
+  menu_set_04: 'Manajemen User & Role',
+  menu_set_05: 'Pengaturan Observasi & Biaya',
+  menu_set_06: 'Aturan Notifikasi',
   menu_set_07: 'Kelola Nama Persona',
 
   // 11. System
-  menu_sys: 'System',
-  menu_sys_01: 'User Profile',
-  menu_sys_02: 'Help & Glossary',
+  menu_sys: 'Sistem',
+  menu_sys_01: 'Profil Pengguna',
+  menu_sys_02: 'Bantuan & Glosarium',
 
   // Role Management
   role_title: 'Manajemen Role',
