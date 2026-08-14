@@ -181,9 +181,7 @@ export function Login() {
         </form>
 
         <p className="text-center text-[11px] text-[#9A968E] mt-6">
-          {lang === 'id'
-            ? 'Mockup — kredensial apa pun diterima di mode demo.'
-            : 'Mockup — any credentials accepted in demo mode.'}
+          © 2026 CPI Analytics
         </p>
       </div>
     </div>
