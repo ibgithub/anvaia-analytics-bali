@@ -3,10 +3,6 @@ import { DashboardLayout } from './components/DashboardLayout';
 import { Login } from './pages/Login';
 import { I18nProvider } from './i18n/I18nProvider';
 import { PlaceholderPage } from './pages/PlaceholderPage';
-import { ExecutivePortfolio } from './pages/ExecutivePortfolio';
-import { ExecutiveDashboard } from './pages/ExecutiveDashboard';
-import { ClusterMap } from './pages/ClusterMap';
-import { ChurnWatchlist } from './pages/ChurnWatchlist';
 import { RoleManagement } from './pages/RoleManagement';
 import { UserManagement } from './pages/UserManagement';
 import { ChangePassword } from './pages/ChangePassword';
@@ -37,78 +33,68 @@ const router = createBrowserRouter([
       </RequireAuth>
     ),
     children: [
-      // Redirect root to executive dashboard
-      { index: true, element: <Navigate to="/executive/demographics" replace /> },
+      // Redirect root to Corporate Insight
+      { index: true, element: <Navigate to="/corporate-insight/overview" replace /> },
 
-      // M1: Executive Dashboard
-      { path: 'executive/portfolio', element: <ExecutivePortfolio /> },
-      { path: 'executive/churn-distribution', element: <PlaceholderPage menuKey="menu_m1_2" /> },
-      { path: 'executive/segmentation-summary', element: <PlaceholderPage menuKey="menu_m1_3" /> },
-      { path: 'executive/top-products', element: <PlaceholderPage menuKey="menu_m1_4" /> },
-      { path: 'executive/priority-alerts', element: <PlaceholderPage menuKey="menu_m1_5" /> },
-      { path: 'executive/demographics', element: <ExecutiveDashboard /> },
+      // 1. Corporate Insight
+      { path: 'corporate-insight/overview', element: <PlaceholderPage menuKey="menu_ci_01" /> },
 
-      // M2: Customer Segmentation
-      { path: 'segmentation/cluster-map', element: <ClusterMap /> },
-      { path: 'segmentation/persona', element: <PlaceholderPage menuKey="menu_m2_2" /> },
-      { path: 'segmentation/characteristics', element: <PlaceholderPage menuKey="menu_m2_3" /> },
-      { path: 'segmentation/member-list', element: <PlaceholderPage menuKey="menu_m2_4" /> },
-      { path: 'segmentation/migration-trend', element: <PlaceholderPage menuKey="menu_m2_5" /> },
+      // 2. Churn Analysis
+      { path: 'churn/overview', element: <PlaceholderPage menuKey="menu_ch_01" /> },
+      { path: 'churn/ranking', element: <PlaceholderPage menuKey="menu_ch_02" /> },
+      { path: 'churn/model-performance', element: <PlaceholderPage menuKey="menu_ch_03" /> },
 
-      // M3: Churn Prediction
-      { path: 'churn/watchlist', element: <ChurnWatchlist /> },
-      { path: 'churn/score-distribution', element: <PlaceholderPage menuKey="menu_m3_2" /> },
-      { path: 'churn/worsening-score', element: <PlaceholderPage menuKey="menu_m3_3" /> },
-      { path: 'churn/driver-detail', element: <PlaceholderPage menuKey="menu_m3_4" /> },
-      { path: 'churn/action-history', element: <PlaceholderPage menuKey="menu_m3_5" /> },
+      // 3. Customer Profitability
+      { path: 'profitability/overview', element: <PlaceholderPage menuKey="menu_cp_01" /> },
+      { path: 'profitability/list', element: <PlaceholderPage menuKey="menu_cp_02" /> },
+      { path: 'profitability/model-performance', element: <PlaceholderPage menuKey="menu_cp_03" /> },
 
-      // M4: Customer Profitability
-      { path: 'profitability/ranking', element: <PlaceholderPage menuKey="menu_m4_1" /> },
-      { path: 'profitability/priority-matrix', element: <PlaceholderPage menuKey="menu_m4_2" /> },
-      { path: 'profitability/persona-group', element: <PlaceholderPage menuKey="menu_m4_3" /> },
-      { path: 'profitability/breakdown', element: <PlaceholderPage menuKey="menu_m4_4" /> },
-      { path: 'profitability/trend', element: <PlaceholderPage menuKey="menu_m4_5" /> },
-      { path: 'profitability/clv', element: <PlaceholderPage menuKey="menu_m4_6" /> },
+      // 4. Customer Segmentation
+      { path: 'segmentation/overview', element: <PlaceholderPage menuKey="menu_cs_01" /> },
+      { path: 'segmentation/characteristics', element: <PlaceholderPage menuKey="menu_cs_02" /> },
+      { path: 'segmentation/product-usage', element: <PlaceholderPage menuKey="menu_cs_03" /> },
+      { path: 'segmentation/model-performance', element: <PlaceholderPage menuKey="menu_cs_04" /> },
 
-      // M5: Product Recommendation
-      { path: 'recommendation/list', element: <PlaceholderPage menuKey="menu_m5_1" /> },
-      { path: 'recommendation/status', element: <PlaceholderPage menuKey="menu_m5_2" /> },
-      { path: 'recommendation/cold-start', element: <PlaceholderPage menuKey="menu_m5_3" /> },
-      { path: 'recommendation/performance', element: <PlaceholderPage menuKey="menu_m5_4" /> },
-      { path: 'recommendation/product-config', element: <PlaceholderPage menuKey="menu_m5_5" /> },
+      // 5. CPI Matrix
+      { path: 'cpi-matrix/overview', element: <PlaceholderPage menuKey="menu_cpi_01" /> },
+      { path: 'cpi-matrix/hot-target', element: <PlaceholderPage menuKey="menu_cpi_02" /> },
 
-      // M6: Customer Profile
-      { path: 'customer-profile/overview', element: <PlaceholderPage menuKey="menu_m6_1" /> },
-      { path: 'customer-profile/cluster-persona', element: <PlaceholderPage menuKey="menu_m6_2" /> },
-      { path: 'customer-profile/churn-score', element: <PlaceholderPage menuKey="menu_m6_3" /> },
-      { path: 'customer-profile/profitability-clv', element: <PlaceholderPage menuKey="menu_m6_4" /> },
-      { path: 'customer-profile/retention-priority', element: <PlaceholderPage menuKey="menu_m6_5" /> },
-      { path: 'customer-profile/active-recommendations', element: <PlaceholderPage menuKey="menu_m6_6" /> },
-      { path: 'customer-profile/credit-score', element: <PlaceholderPage menuKey="menu_m6_7" /> },
-      { path: 'customer-profile/rm-interaction', element: <PlaceholderPage menuKey="menu_m6_8" /> },
+      // 6. Recommender System
+      { path: 'recommender/recommendations', element: <PlaceholderPage menuKey="menu_rs_01" /> },
+      { path: 'recommender/model-performance', element: <PlaceholderPage menuKey="menu_rs_02" /> },
 
-      // M7: Reports & Analytics
-      { path: 'reports/segmentation', element: <PlaceholderPage menuKey="menu_m7_1" /> },
-      { path: 'reports/churn-retention', element: <PlaceholderPage menuKey="menu_m7_2" /> },
-      { path: 'reports/profitability', element: <PlaceholderPage menuKey="menu_m7_3" /> },
-      { path: 'reports/recommendation-effectiveness', element: <PlaceholderPage menuKey="menu_m7_4" /> },
-      { path: 'reports/export', element: <PlaceholderPage menuKey="menu_m7_5" /> },
+      // 7. Campaign & Strategy Tracking
+      { path: 'campaign/registry', element: <PlaceholderPage menuKey="menu_cam_01" /> },
+      { path: 'campaign/assignment', element: <PlaceholderPage menuKey="menu_cam_02" /> },
+      { path: 'campaign/effectiveness', element: <PlaceholderPage menuKey="menu_cam_03" /> },
 
-      // M8: System Settings
-      { path: 'settings/model-parameters', element: <PlaceholderPage menuKey="menu_m8_1" /> },
-      { path: 'settings/batch-processing', element: <PlaceholderPage menuKey="menu_m8_2" /> },
-      { path: 'settings/product-config', element: <PlaceholderPage menuKey="menu_m8_3" /> },
-      { path: 'settings/user-management', element: <UserManagement /> },
+      // 8. Customer 360
+      { path: 'customer-360/profile', element: <PlaceholderPage menuKey="menu_c360_01" /> },
+
+      // 9. Alert / Notification Center
+      { path: 'alerts/center', element: <PlaceholderPage menuKey="menu_not_01" /> },
+
+      // 10. Setup
+      { path: 'setup/threshold-churn', element: <PlaceholderPage menuKey="menu_set_01" /> },
+      { path: 'setup/threshold-profitability', element: <PlaceholderPage menuKey="menu_set_02" /> },
+      { path: 'setup/recommendation-settings', element: <PlaceholderPage menuKey="menu_set_03" /> },
+      { path: 'setup/user-role-management', element: <UserManagement /> },
+      { path: 'setup/observation-settings', element: <PlaceholderPage menuKey="menu_set_05" /> },
+      { path: 'setup/notification-rules', element: <PlaceholderPage menuKey="menu_set_06" /> },
+      { path: 'setup/persona-labels', element: <PlaceholderPage menuKey="menu_set_07" /> },
+
+      // 11. System
+      { path: 'system/profile', element: <EditProfile /> },
+      { path: 'system/help-glossary', element: <PlaceholderPage menuKey="menu_sys_02" /> },
+
+      // Legacy routes (keep role/menu management accessible)
       { path: 'settings/role-management', element: <RoleManagement /> },
       { path: 'settings/menu-management', element: <MenuManagement /> },
       { path: 'settings/change-password', element: <ChangePassword /> },
-      { path: 'settings/integration-monitoring', element: <PlaceholderPage menuKey="menu_m8_8" /> },
-      { path: 'settings/audit-log', element: <PlaceholderPage menuKey="menu_m8_9" /> },
-      { path: 'settings/edit-profile', element: <EditProfile /> },
       { path: 'settings/system-parameters', element: <SystemParameter /> },
 
-      // Catch-all
-      { path: '*', element: <Navigate to="/executive/portfolio" replace /> },
+      // Catch-all → redirect to Corporate Insight
+      { path: '*', element: <Navigate to="/corporate-insight/overview" replace /> },
     ],
   },
 ]);
