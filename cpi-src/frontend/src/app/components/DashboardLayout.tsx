@@ -178,46 +178,68 @@ export function DashboardLayout() {
           <div className="space-y-1">
             {menuStructure.map((menu) => {
               const Icon = menu.icon;
-              const isExpanded = effectiveExpanded === menu.key;
-              const isActive = isExpanded;
+              const hasChildren = menu.children.length > 0;
+              const isExpanded = hasChildren && effectiveExpanded === menu.key;
+              const isActive = hasChildren ? isExpanded : location.pathname === menu.path || location.pathname.startsWith(menu.path + '/');
               const label = (t as any)[menu.key] || menu.key;
 
               return (
                 <div key={menu.key}>
                   {/* Parent menu */}
-                  <button
-                    onClick={() => {
-                      if (isCollapsed) {
-                        setIsCollapsed(false);
-                        setExpandedMenu(menu.key);
-                      } else {
-                        toggleMenu(menu.key);
-                      }
-                    }}
-                    className={`
-                      w-full flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-3 py-2 rounded-lg transition-all text-[13px]
-                      ${isActive
-                        ? 'border border-blue-500 text-blue-400 font-semibold bg-blue-500/10'
-                        : 'border border-transparent text-slate-300 hover:bg-slate-800 hover:text-white'
-                      }
-                    `}
-                    title={isCollapsed ? label : ''}
-                  >
-                    <div className="flex items-center gap-2">
-                      <Icon className="w-4 h-4 flex-shrink-0" />
+                  {hasChildren ? (
+                    <button
+                      onClick={() => {
+                        if (isCollapsed) {
+                          setIsCollapsed(false);
+                          setExpandedMenu(menu.key);
+                        } else {
+                          toggleMenu(menu.key);
+                        }
+                      }}
+                      className={`
+                        w-full flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-3 py-2 rounded-lg transition-all text-[13px]
+                        ${isActive
+                          ? 'border border-blue-500 text-blue-400 font-semibold bg-blue-500/10'
+                          : 'border border-transparent text-slate-300 hover:bg-slate-800 hover:text-white'
+                        }
+                      `}
+                      title={isCollapsed ? label : ''}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        {!isCollapsed && (
+                          <span className="truncate">{label}</span>
+                        )}
+                      </div>
                       {!isCollapsed && (
-                        <span className="truncate">{label}</span>
+                        isExpanded
+                          ? <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" />
+                          : <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
                       )}
-                    </div>
-                    {!isCollapsed && (
-                      isExpanded
-                        ? <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" />
-                        : <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
-                    )}
-                  </button>
+                    </button>
+                  ) : (
+                    <Link
+                      to={menu.path}
+                      className={`
+                        w-full flex items-center ${isCollapsed ? 'justify-center' : ''} px-3 py-2 rounded-lg transition-all text-[13px]
+                        ${isActive
+                          ? 'border border-blue-500 text-blue-400 font-semibold bg-blue-500/10'
+                          : 'border border-transparent text-slate-300 hover:bg-slate-800 hover:text-white'
+                        }
+                      `}
+                      title={isCollapsed ? label : ''}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        {!isCollapsed && (
+                          <span className="truncate">{label}</span>
+                        )}
+                      </div>
+                    </Link>
+                  )}
 
                   {/* Sub menus with accordion animation */}
-                  {!isCollapsed && (
+                  {!isCollapsed && hasChildren && (
                     <div
                       className="ml-5 border-l border-slate-700 pl-2.5 overflow-hidden transition-all duration-300 ease-in-out"
                       style={{
