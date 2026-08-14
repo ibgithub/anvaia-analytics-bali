@@ -14,7 +14,7 @@ services:
       - DB_USER=${DB_USER:-ml_user}
       - DB_PASSWORD=${DB_PASSWORD:-ml_user}
       - JWT_SECRET=${JWT_SECRET:-my-super-secret-key-minimum-32-bytes!!!}
-      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost,http://localhost:80,http://localhost:5173,http://localhost:3000}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://cpi.teman-umkm.com,http://cpi.teman-umkm.com,http://localhost,http://localhost:80,http://localhost:5173,http://localhost:3000}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
@@ -35,7 +35,7 @@ services:
       - DB_USER=${DB_USER:-ml_user}
       - DB_PASSWORD=${DB_PASSWORD:-ml_user}
       - JWT_SECRET=${JWT_SECRET:-my-super-secret-key-minimum-32-bytes!!!}
-      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost,http://localhost:80,http://localhost:5173,http://localhost:3000}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://cpi.teman-umkm.com,http://cpi.teman-umkm.com,http://localhost,http://localhost:80,http://localhost:5173,http://localhost:3000}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
