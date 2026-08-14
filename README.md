@@ -28,7 +28,7 @@ CPI/
     ├── backend/
     │   ├── auth-service/                             # Service autentikasi, RBAC & manajemen user
     │   │   ├── Dockerfile                            # Dockerfile auth-service
-    │   │   └── sql/                                  # Skrip migrasi database SQL (001 - 008)
+    │   │   └── src/main/resources/db/migration/      # Flyway SQL migrations (V1, V2, dst.)
     │   └── executive-service/                        # Service analitik & executive portfolio
     │       └── Dockerfile                            # Dockerfile executive-service
     └── frontend/                                     # Web client (React + Vite + TypeScript + Tailwind)
@@ -48,17 +48,15 @@ cp .env.example .env
 Sesuaikan nilai di `.env`:
 * Jika PostgreSQL berjalan di **host VPS yang sama (di luar docker)**: biarkan `DB_HOST=host.docker.internal`.
 * Jika PostgreSQL berada di **laptop / server lain**: ganti `DB_HOST=IP_LAPTOP_ATAU_SERVER`.
+* Untuk opsi Nginx Host + SSL: set `APP_PORT=3000`.
 
-### 2. Setup Database PostgreSQL
-Pastikan database `cpi` sudah dibuat di PostgreSQL Anda, lalu jalankan skrip migrasi SQL di `cpi-src/backend/auth-service/sql/` (`001` s/d `008`).
-
-### 3. Jalankan Docker Compose
+### 2. Jalankan Docker Compose
 ```bash
 docker compose up -d --build
 ```
-Aplikasi langsung dapat diakses di browser melalui port `80` (atau port yang ditentukan di `APP_PORT`).
+> 💡 **Otomatisasi Database (Flyway)**: Anda **TIDAK PERLU** menjalankan skrip SQL secara manual! Saat `auth-service` menyala pertama kali, Flyway akan otomatis membuat schema (`auth`, `ods`), seluruh tabel, foreign key, serta mengisikan data awal (*seed data* roles, users, menus, settings) ke database PostgreSQL.
 
-### 4. Update Aplikasi di Masa Depan
+### 3. Update Aplikasi di Masa Depan
 Kapan saja ada pembaruan kode, Anda cukup menjalankan:
 ```bash
 git pull && docker compose up -d --build
@@ -74,7 +72,7 @@ git pull && docker compose up -d --build
   cd cpi-src/backend/auth-service
   ./mvnw spring-boot:run
   ```
-  *(Port: `8081`)*
+  *(Port: `8081` — Flyway otomatis berjalan)*
 
 * **Executive Service**:
   ```bash

@@ -8,6 +8,13 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:cpi}}
     username: ${DB_USER:ml_user}
     password: ${DB_PASSWORD:ml_user}
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+    default-schema: auth
+    schemas: auth,ods,public
   security:
     oauth2:
       client:
