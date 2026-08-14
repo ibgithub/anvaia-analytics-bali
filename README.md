@@ -22,27 +22,53 @@ CPI/
 ├── CPI_WebApp_Tahap-01_Spec.md                       # Dokumen spesifikasi fungsional Tahap-01
 ├── CPI_WebApp_Sitemap.html                           # Sitemap & diagram alur navigasi aplikasi
 ├── CPI_WebApp_Mockup.html                            # Mockup UI interaktif aplikasi CPI
+├── docker-compose.yml                                # Multi-container orchestration (Auth, Exec, Frontend/Nginx)
+├── .env.example                                      # Template konfigurasi environment & database
 └── cpi-src/                                          # Source code aplikasi
     ├── backend/
     │   ├── auth-service/                             # Service autentikasi, RBAC & manajemen user
+    │   │   ├── Dockerfile                            # Dockerfile auth-service
     │   │   └── sql/                                  # Skrip migrasi database SQL (001 - 008)
     │   └── executive-service/                        # Service analitik & executive portfolio
+    │       └── Dockerfile                            # Dockerfile executive-service
     └── frontend/                                     # Web client (React + Vite + TypeScript + Tailwind)
+        ├── Dockerfile                                # Multi-stage build + Nginx
+        └── nginx.conf                                # Nginx reverse proxy & static routing
 ```
 
-## ⚙️ Persyaratan Sistem
+---
 
-- **Java**: OpenJDK 21
-- **Node.js**: v18+ (disarankan v20+)
-- **Database**: PostgreSQL 14+ (Nama DB: `cpi`)
-- **Build Tools**: Maven 3.9+
+## 🐳 Deploy Cepat via Docker (di VPS)
 
-## 🚀 Memulai Development
+### 1. Inisialisasi Environment
+Di server VPS Anda, clone atau pull repositori, lalu salin `.env.example`:
+```bash
+cp .env.example .env
+```
+Sesuaikan nilai di `.env`:
+* Jika PostgreSQL berjalan di **host VPS yang sama (di luar docker)**: biarkan `DB_HOST=host.docker.internal`.
+* Jika PostgreSQL berada di **laptop / server lain**: ganti `DB_HOST=IP_LAPTOP_ATAU_SERVER`.
 
-### 1. Setup Database
-Buat database `cpi` di PostgreSQL dan jalankan skrip migrasi SQL yang berada di `cpi-src/backend/auth-service/sql/` secara berurutan (`001` s/d `008`).
+### 2. Setup Database PostgreSQL
+Pastikan database `cpi` sudah dibuat di PostgreSQL Anda, lalu jalankan skrip migrasi SQL di `cpi-src/backend/auth-service/sql/` (`001` s/d `008`).
 
-### 2. Menjalankan Backend Services
+### 3. Jalankan Docker Compose
+```bash
+docker compose up -d --build
+```
+Aplikasi langsung dapat diakses di browser melalui port `80` (atau port yang ditentukan di `APP_PORT`).
+
+### 4. Update Aplikasi di Masa Depan
+Kapan saja ada pembaruan kode, Anda cukup menjalankan:
+```bash
+git pull && docker compose up -d --build
+```
+
+---
+
+## 💻 Menjalankan Manual (Local Development Tanpa Docker)
+
+### 1. Menjalankan Backend Services
 * **Auth Service**:
   ```bash
   cd cpi-src/backend/auth-service
@@ -57,7 +83,7 @@ Buat database `cpi` di PostgreSQL dan jalankan skrip migrasi SQL yang berada di 
   ```
   *(Port: `8082`)*
 
-### 3. Menjalankan Frontend
+### 2. Menjalankan Frontend
 ```bash
 cd cpi-src/frontend
 npm install
