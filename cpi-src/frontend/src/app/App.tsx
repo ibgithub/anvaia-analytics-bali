@@ -3,6 +3,7 @@ import { DashboardLayout } from './components/DashboardLayout';
 import { Login } from './pages/Login';
 import { I18nProvider } from './i18n/I18nProvider';
 import { PlaceholderPage } from './pages/PlaceholderPage';
+import { CorporateInsight } from './pages/CorporateInsight';
 import { RoleManagement } from './pages/RoleManagement';
 import { UserManagement } from './pages/UserManagement';
 import { ChangePassword } from './pages/ChangePassword';
@@ -34,10 +35,11 @@ const router = createBrowserRouter([
     ),
     children: [
       // Redirect root to Corporate Insight
-      { index: true, element: <Navigate to="/corporate-insight/overview" replace /> },
+      { index: true, element: <Navigate to="/corporate-insight" replace /> },
 
-      // 1. Corporate Insight
-      { path: 'corporate-insight/overview', element: <PlaceholderPage menuKey="menu_ci_01" /> },
+      // 1. Corporate Insight (no sub-menu, direct page)
+      { path: 'corporate-insight', element: <CorporateInsight /> },
+      { path: 'corporate-insight/overview', element: <CorporateInsight /> },
 
       // 2. Churn Analysis
       { path: 'churn/overview', element: <PlaceholderPage menuKey="menu_ch_01" /> },
@@ -94,7 +96,7 @@ const router = createBrowserRouter([
       { path: 'settings/system-parameters', element: <SystemParameter /> },
 
       // Catch-all → redirect to Corporate Insight
-      { path: '*', element: <Navigate to="/corporate-insight/overview" replace /> },
+      { path: '*', element: <Navigate to="/corporate-insight" replace /> },
     ],
   },
 ]);
