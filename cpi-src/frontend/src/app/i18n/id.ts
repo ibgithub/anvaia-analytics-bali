@@ -4,93 +4,72 @@ const id = {
   langLabel: 'Bahasa Indonesia',
 
   // App
-  appName: 'ANVAIA',
-  appTagline: 'Analytics Dashboard',
+  appName: 'CPI Analytics',
+  appTagline: 'Customer Intelligence Platform',
   logout: 'Keluar',
   language: 'Bahasa',
 
-  // Menu 1: Dashboard Eksekutif
-  menu_m1: 'Dashboard Eksekutif',
-  menu_m1_1: 'Ringkasan Portofolio',
-  menu_m1_2: 'Churn Distribution (Semua Cabang)',
-  menu_m1_3: 'Ringkasan Segmentasi',
-  menu_m1_4: 'Produk Terlaris dari Rekomendasi Hari Ini',
-  menu_m1_5: 'Alert Prioritas Lintas UC',
-  menu_m1_6: 'Demografi & Persebaran Nasabah',
+  // 1. Corporate Insight
+  menu_ci: 'Corporate Insight',
+  menu_ci_01: 'Executive Overview',
 
-  // Menu 2: Segmentasi Nasabah (UC1)
-  menu_m2: 'Segmentasi Nasabah (UC1)',
-  menu_m2_1: 'Peta Cluster',
-  menu_m2_2: 'Persona Setiap Cluster',
-  menu_m2_3: 'Karakteristik Setiap Cluster',
-  menu_m2_4: 'Daftar Anggota Cluster',
-  menu_m2_5: 'Tren Pergerakan Antar Cluster',
+  // 2. Churn Analysis
+  menu_ch: 'Churn Analysis',
+  menu_ch_01: 'Churn Overview',
+  menu_ch_02: 'Churn Ranking',
+  menu_ch_03: 'Model Performance — Churn',
 
-  // Menu 3: Churn Prediction (UC2)
-  menu_m3: 'Churn Prediction (UC2)',
-  menu_m3_1: 'Watchlist Churn',
-  menu_m3_2: 'Distribusi Churn Score',
-  menu_m3_3: 'Nasabah Skor Memburuk',
-  menu_m3_4: 'Detail Faktor Penyebab + Rekomendasi Retensi',
-  menu_m3_5: 'Riwayat Tindakan Retensi',
+  // 3. Customer Profitability
+  menu_cp: 'Profitability Analysis',
+  menu_cp_01: 'Profitability Overview',
+  menu_cp_02: 'Customer Profitability List',
+  menu_cp_03: 'Model Performance — Profitability',
 
-  // Menu 4: Customer Profitability (UC3)
-  menu_m4: 'Customer Profitability (UC3)',
-  menu_m4_1: 'Ranking Profitabilitas',
-  menu_m4_2: 'Matrix Prioritas Retensi — 3 Tingkat',
-  menu_m4_2a: 'Hi Priority (Hi-Profit × Hi-Churn)',
-  menu_m4_2b: 'Med Priority (Hi-Profit × Med-Churn)',
-  menu_m4_2c: 'Low Priority (Med-Profit × Hi-Churn)',
-  menu_m4_3: 'Kelompok Persona per Tingkat Prioritas + Strategi Bisnis',
-  menu_m4_4: 'Breakdown Komponen Profitabilitas',
-  menu_m4_5: 'Tren Profitabilitas per Segmen',
-  menu_m4_6: 'Proyeksi CLV',
+  // 4. Customer Segmentation
+  menu_cs: 'Segmentation Analysis',
+  menu_cs_01: 'Segmentation Overview',
+  menu_cs_02: 'Cluster Characteristics & Strategy',
+  menu_cs_03: 'Product Usage Analysis',
+  menu_cs_04: 'Model Performance — Segmentation',
 
-  // Menu 5: Rekomendasi Produk (UC4)
-  menu_m5: 'Rekomendasi Produk (UC4)',
-  menu_m5_1: 'Daftar Rekomendasi per Nasabah',
-  menu_m5_2: 'Status Rekomendasi',
-  menu_m5_3: 'Cold-Start Recommendations',
-  menu_m5_4: 'Performance Rekomendasi',
-  menu_m5_5: 'Konfigurasi Produk',
+  // 5. CPI Matrix
+  menu_cpi: 'CPI Matrix',
+  menu_cpi_01: 'CPI Matrix Overview',
+  menu_cpi_02: 'HOT TARGET Deep-Dive',
 
-  // Menu 6: Profil Nasabah Terpadu
-  menu_m6: 'Profil Nasabah Terpadu',
-  menu_m6_1: 'Ikhtisar Nasabah',
-  menu_m6_2: 'Cluster & Persona Nasabah Ini',
-  menu_m6_3: 'Churn Score & Faktor',
-  menu_m6_4: 'Profitabilitas & CLV',
-  menu_m6_5: 'Status Prioritas Retensi',
-  menu_m6_6: 'Rekomendasi Produk Aktif',
-  menu_m6_7: 'Ringkasan Skor Kredit',
-  menu_m6_8: 'Riwayat Interaksi RM',
+  // 6. Recommender System
+  menu_rs: 'Recommender System',
+  menu_rs_01: 'Product Recommendations',
+  menu_rs_02: 'Model Performance — Recommender',
 
-  // Menu 7: Laporan & Analitik
-  menu_m7: 'Laporan & Analitik',
-  menu_m7_1: 'Laporan Segmentasi Bulanan',
-  menu_m7_2: 'Laporan Churn & Retensi',
-  menu_m7_3: 'Laporan Profitabilitas Portofolio',
-  menu_m7_4: 'Laporan Efektivitas Rekomendasi Produk',
-  menu_m7_5: 'Ekspor untuk Manajemen / Regulasi',
+  // 7. Campaign & Strategy Tracking
+  menu_cam: 'Campaign & Strategy',
+  menu_cam_01: 'Business Strategy Registry',
+  menu_cam_02: 'Strategy Assignment & Progress',
+  menu_cam_03: 'Campaign Effectiveness & ROI',
 
-  // Menu 8: Pengaturan Sistem
-  menu_m8: 'Pengaturan Sistem',
-  menu_m8_1: 'Parameter Model per UC',
-  menu_m8_2: 'Jadwal Batch Processing',
-  menu_m8_3: 'Konfigurasi Produk Rekomendasi',
-  menu_m8_4: 'Manajemen Pengguna',
-  menu_m8_4a: 'Buat Pengguna Baru',
-  menu_m8_4b: 'Hapus Pengguna',
-  menu_m8_4c: 'Tetapkan Peran',
-  menu_m8_4d: 'Reset Kata Sandi',
-  menu_m8_4e: 'Log Aktivitas Pengguna',
-  menu_m8_5: 'Manajemen Role',
-  menu_m8_6: 'Manajemen Menu',
-  menu_m8_7: 'Ganti Password',
-  menu_m8_8: 'Integrasi Sistem & Monitoring',
-  menu_m8_9: 'Audit Log Sistem',
-  menu_m8_10: 'Edit Profil',
-  menu_m8_11: 'Parameter Sistem',
+  // 8. Customer 360
+  menu_c360: 'Customer 360',
+  menu_c360_01: 'Customer Search & Profile',
+
+  // 9. Alert / Notification Center
+  menu_not: 'Alert Center',
+  menu_not_01: 'Alert Center',
+
+  // 10. Setup
+  menu_set: 'Setup',
+  menu_set_01: 'Threshold Tiering Churn',
+  menu_set_02: 'Threshold Tiering Profitability',
+  menu_set_03: 'Recommendation Settings',
+  menu_set_04: 'User & Role Management',
+  menu_set_05: 'Observation & Cost Settings',
+  menu_set_06: 'Notification Rules',
+  menu_set_07: 'Kelola Nama Persona',
+
+  // 11. System
+  menu_sys: 'System',
+  menu_sys_01: 'User Profile',
+  menu_sys_02: 'Help & Glossary',
 
   // Role Management
   role_title: 'Manajemen Role',
@@ -138,7 +117,7 @@ const id = {
 
   // Login
   login_title: 'Login',
-  login_subtitle: 'Masuk ke Dashboard ANVAIA',
+  login_subtitle: 'Masuk ke CPI Analytics',
   login_username: 'Username',
   login_password: 'Password',
   login_button: 'Login',
