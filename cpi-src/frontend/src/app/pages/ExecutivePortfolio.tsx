@@ -11,7 +11,7 @@ export function ExecutivePortfolio() {
       {/* Container Iframe */}
       <div className="flex-1 bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm min-h-[550px]">
         <iframe
-          src="https://aihub.bprks.local/panopticon/workbook/#/training/Dashboards%20Plafond%20DPD"
+          src=""
           width="100%"
           height="100%"
           frameBorder="0"

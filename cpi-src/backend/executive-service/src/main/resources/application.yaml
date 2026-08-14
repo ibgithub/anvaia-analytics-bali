@@ -8,19 +8,7 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:cpi}}
     username: ${DB_USER:ml_user}
     password: ${DB_PASSWORD:ml_user}
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: ${KEYCLOAK_CLIENT_ID:ml-dashboard}
-            client-secret: ${KEYCLOAK_CLIENT_SECRET:wPPDQM0EIeQ8UNlnb1p3Qh73yIQMxVTl}
-            scope: openid, profile, email
-            authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
-        provider:
-          keycloak:
-            issuer-uri: ${KEYCLOAK_ISSUER_URI:https://aihub.bprks.local/auth/realms/master}
+
 jwt:
   secret: ${JWT_SECRET:my-super-secret-key-minimum-32-bytes!!!}
   expiration: 3600000 # 1 jam
