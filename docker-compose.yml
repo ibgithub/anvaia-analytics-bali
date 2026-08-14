@@ -6,7 +6,7 @@ services:
     container_name: cpi-auth-service
     restart: unless-stopped
     ports:
-      - "${AUTH_PORT:-8081}:8081"
+      - "${AUTH_PORT:-8091}:8081"
     environment:
       - DB_HOST=${DB_HOST:-host.docker.internal}
       - DB_PORT=${DB_PORT:-5432}
@@ -28,7 +28,7 @@ services:
     container_name: cpi-executive-service
     restart: unless-stopped
     ports:
-      - "${EXECUTIVE_PORT:-8082}:8082"
+      - "${EXECUTIVE_PORT:-8092}:8082"
     environment:
       - DB_HOST=${DB_HOST:-host.docker.internal}
       - DB_PORT=${DB_PORT:-5432}
