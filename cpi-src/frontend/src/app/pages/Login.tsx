@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 import { useI18n, resolveMessage } from '../i18n';
-import { Eye, EyeOff, Lock, User } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 export function Login() {
   const [username, setUsername] = useState('');
@@ -9,7 +9,6 @@ export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [slideOut, setSlideOut] = useState(false);
   const navigate = useNavigate();
   const { lang, t, setLang } = useI18n();
 
@@ -67,11 +66,8 @@ export function Login() {
         localStorage.setItem('auth_menus', JSON.stringify(menus));
       }
 
-      // Redirect ke dashboard with slide animation
-      setSlideOut(true);
-      setTimeout(() => {
-        navigate('/', { replace: true });
-      }, 500);
+      // Redirect ke dashboard
+      navigate('/', { replace: true });
     } catch (err: any) {
       const msg = err.message || 'Error';
       setError(resolveMessage(msg, lang));
@@ -81,162 +77,114 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#f8fafc]">
-      <div className={`min-h-screen flex transition-transform duration-700 ease-in-out ${slideOut ? '-translate-x-full' : 'translate-x-0'}`}>
+    <div className="fixed inset-0 bg-gradient-to-br from-[#1F3864] to-[#162A4C] flex items-center justify-center p-4">
+      {/* Login box */}
+      <div className="bg-white rounded-2xl p-8 w-full max-w-[360px] shadow-[0_20px_60px_rgba(0,0,0,0.3)]">
         
-        {/* Left panel — premium branding */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0b0f19] flex-col items-center justify-center p-12 relative overflow-hidden">
-          
-          {/* Radial grid background overlay */}
-          <div 
-            className="absolute inset-0 opacity-[0.07]" 
-            style={{ 
-              backgroundImage: 'radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px)', 
-              backgroundSize: '24px 24px' 
-            }}
-          />
-          
-          {/* Glowing blobs */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] animate-pulse duration-[6000ms]"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[120px] animate-pulse duration-[8000ms]"></div>
-
-          <div className="relative z-10 text-center max-w-lg">
-            {/* Logo box */}
-            <div className="w-24 h-24 bg-gradient-to-tr from-blue-600 via-indigo-500 to-violet-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-[0_12px_40px_rgba(79,70,229,0.35)] border border-white/10 relative group">
-              <span className="text-white text-4xl font-extrabold tracking-wider filter drop-shadow-md">A</span>
-              <div className="absolute inset-0 rounded-3xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            </div>
-
-            <h1 className="text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-300 mb-4">
-              ANVAIA
-            </h1>
-            <p className="text-lg font-medium text-indigo-200 mb-6 tracking-wide">
-              Customer Intelligence Platform
-            </p>
-            <div className="h-[2px] w-24 bg-gradient-to-r from-transparent via-indigo-500 to-transparent mx-auto mb-6"></div>
-            <p className="text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
-              {lang === 'id'
-                ? 'Analitik nasabah cerdas berbasis big data untuk keputusan perbankan yang lebih cepat dan presisi.'
-                : 'Smart big data customer analytics for faster and more precise banking decisions.'}
-            </p>
-          </div>
+        {/* Language toggle — top right */}
+        <div className="flex justify-end mb-5 gap-2">
+          <button
+            onClick={() => setLang('id')}
+            className={`p-1.5 rounded-lg transition-all ${lang === 'id' ? 'bg-slate-100 shadow-sm ring-1 ring-slate-200' : 'hover:bg-slate-100'}`}
+            title="Bahasa Indonesia"
+          >
+            <svg width="24" height="16" viewBox="0 0 24 16" className="rounded-[3px]">
+              <rect width="24" height="8" fill="#FF0000"/>
+              <rect y="8" width="24" height="8" fill="#FFFFFF" stroke="#e0e0e0" strokeWidth="0.5"/>
+            </svg>
+          </button>
+          <button
+            onClick={() => setLang('en')}
+            className={`p-1.5 rounded-lg transition-all ${lang === 'en' ? 'bg-slate-100 shadow-sm ring-1 ring-slate-200' : 'hover:bg-slate-100'}`}
+            title="English"
+          >
+            <svg width="24" height="16" viewBox="0 0 60 30" className="rounded-[3px]">
+              <clipPath id="t"><rect width="60" height="30"/></clipPath>
+              <g clipPath="url(#t)">
+                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" clipPath="url(#t)"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+              </g>
+            </svg>
+          </button>
         </div>
 
-        {/* Right panel — login form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 bg-slate-50 relative">
-          <div className="w-full max-w-md z-10">
-            
-            {/* Language toggle */}
-            <div className="flex justify-end mb-6 gap-2">
-              <button
-                onClick={() => setLang('id')}
-                className={`p-1.5 rounded-lg transition-all ${lang === 'id' ? 'bg-white shadow-md border border-slate-200/80' : 'hover:bg-slate-200/50'}`}
-                title="Bahasa Indonesia"
-              >
-                <svg width="24" height="16" viewBox="0 0 24 16" className="rounded-md">
-                  <rect width="24" height="8" fill="#FF0000"/>
-                  <rect y="8" width="24" height="8" fill="#FFFFFF"/>
-                </svg>
-              </button>
-              <button
-                onClick={() => setLang('en')}
-                className={`p-1.5 rounded-lg transition-all ${lang === 'en' ? 'bg-white shadow-md border border-slate-200/80' : 'hover:bg-slate-200/50'}`}
-                title="English"
-              >
-                <svg width="24" height="16" viewBox="0 0 60 30" className="rounded-md">
-                  <clipPath id="t"><rect width="60" height="30"/></clipPath>
-                  <g clipPath="url(#t)">
-                    <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
-                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" clipPath="url(#t)"/>
-                    <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
-                    <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
-                  </g>
-                </svg>
-              </button>
-            </div>
-
-            {/* Mobile logo (shown on small screens) */}
-            <div className="lg:hidden text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                <span className="text-white text-2xl font-bold">A</span>
-              </div>
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">ANVAIA</h1>
-              <p className="text-xs text-slate-500 mt-1">Customer Intelligence Platform</p>
-            </div>
-
-            {/* Form card */}
-            <div className="bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-slate-100/80 p-8 md:p-10 relative overflow-hidden transition-all duration-300 hover:shadow-[0_15px_50px_rgba(0,0,0,0.05)]">
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{t.login_title}</h2>
-                <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">{t.login_subtitle}</p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {error && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3.5 rounded-xl text-sm leading-relaxed">
-                    {error}
-                  </div>
-                )}
-
-                <div>
-                  <label htmlFor="username" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                    {t.login_username}
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
-                    <input
-                      id="username"
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      required
-                      className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 bg-slate-50/50 focus:bg-white placeholder-slate-400 text-slate-800"
-                      placeholder={t.login_placeholder_username}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="password" className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                    {t.login_password}
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
-                    <input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="w-full pl-11 pr-12 py-3 border border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all duration-200 bg-slate-50/50 focus:bg-white placeholder-slate-400 text-slate-800"
-                      placeholder={t.login_placeholder_password}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
-                    >
-                      {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 active:scale-[0.98] disabled:scale-100 disabled:opacity-50 text-white font-semibold rounded-xl transition-all duration-200 shadow-[0_4px_15px_rgba(79,70,229,0.25)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.35)]"
-                >
-                  {loading ? t.login_loading : t.login_button}
-                </button>
-              </form>
-            </div>
-
-            <p className="text-center text-xs text-slate-400 mt-8">
-              © 2026 ANVAIA — Customer Intelligence Platform
-            </p>
-          </div>
+        {/* Logo */}
+        <div className="w-12 h-12 rounded-[10px] bg-[#B4522E] flex items-center justify-center mb-4">
+          <span className="text-white text-lg font-bold tracking-wide">DSI</span>
         </div>
+
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-[#23211C] mb-0.5">CPI Analytics</h2>
+        <p className="text-[#6B6862] text-[13px] mb-6">
+          {lang === 'id'
+            ? 'Portal analitik nasabah — masuk untuk melanjutkan'
+            : 'Customer analytics portal — sign in to continue'}
+        </p>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label htmlFor="username" className="block text-xs font-semibold text-[#6B6862] mb-1.5">
+              {t.login_username}
+            </label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="w-full px-3 py-2.5 border border-[#E7E3DA] rounded-lg focus:ring-2 focus:ring-[#B4522E]/20 focus:border-[#B4522E] outline-none transition bg-white text-[#23211C] text-sm placeholder-[#9A968E]"
+              placeholder={t.login_placeholder_username}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-xs font-semibold text-[#6B6862] mb-1.5">
+              {t.login_password}
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-3 pr-10 py-2.5 border border-[#E7E3DA] rounded-lg focus:ring-2 focus:ring-[#B4522E]/20 focus:border-[#B4522E] outline-none transition bg-white text-[#23211C] text-sm placeholder-[#9A968E]"
+                placeholder={t.login_placeholder_password}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9A968E] hover:text-[#6B6862] transition"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2.5 px-4 bg-[#B4522E] hover:bg-[#D9743F] active:scale-[0.98] disabled:opacity-50 text-white font-semibold rounded-lg transition-all duration-200 text-sm mt-2"
+          >
+            {loading ? t.login_loading : t.login_button}
+          </button>
+        </form>
+
+        <p className="text-center text-[11px] text-[#9A968E] mt-6">
+          {lang === 'id'
+            ? 'Mockup — kredensial apa pun diterima di mode demo.'
+            : 'Mockup — any credentials accepted in demo mode.'}
+        </p>
       </div>
     </div>
   );
