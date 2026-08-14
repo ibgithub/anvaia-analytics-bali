@@ -1,0 +1,150 @@
+// English resource file
+const en = {
+  lang: 'en',
+  langLabel: 'English',
+
+  // App
+  appName: 'ANVAIA',
+  appTagline: 'Analytics Dashboard',
+  logout: 'Logout',
+  language: 'Language',
+
+  // Menu 1: Executive Dashboard
+  menu_m1: 'Executive Dashboard',
+  menu_m1_1: 'Portfolio Overview',
+  menu_m1_2: 'Churn Distribution (All Branches)',
+  menu_m1_3: 'Segmentation Summary',
+  menu_m1_4: 'Top Recommended Products Today',
+  menu_m1_5: 'Cross-UC Priority Alerts',
+  menu_m1_6: 'Demographics & Distribution',
+
+  // Menu 2: Customer Segmentation (UC1)
+  menu_m2: 'Customer Segmentation (UC1)',
+  menu_m2_1: 'Cluster Map',
+  menu_m2_2: 'Cluster Persona',
+  menu_m2_3: 'Cluster Characteristics',
+  menu_m2_4: 'Cluster Member List',
+  menu_m2_5: 'Cluster Migration Trend',
+
+  // Menu 3: Churn Prediction (UC2)
+  menu_m3: 'Churn Prediction (UC2)',
+  menu_m3_1: 'Churn Watchlist',
+  menu_m3_2: 'Churn Score Distribution',
+  menu_m3_3: 'Customers with Worsening Score',
+  menu_m3_4: 'Driver Detail + Retention Recommendation',
+  menu_m3_5: 'Retention Action History',
+
+  // Menu 4: Customer Profitability (UC3)
+  menu_m4: 'Customer Profitability (UC3)',
+  menu_m4_1: 'Profitability Ranking',
+  menu_m4_2: 'Retention Priority Matrix — 3 Tiers',
+  menu_m4_2a: 'High Priority (High-Profit × High-Churn)',
+  menu_m4_2b: 'Medium Priority (High-Profit × Medium-Churn)',
+  menu_m4_2c: 'Low Priority (Medium-Profit × High-Churn)',
+  menu_m4_3: 'Persona Group by Priority Tier + Business Strategy',
+  menu_m4_4: 'Profitability Component Breakdown',
+  menu_m4_5: 'Profitability Trend by Segment',
+  menu_m4_6: 'CLV Projection',
+
+  // Menu 5: Product Recommendation (UC4)
+  menu_m5: 'Product Recommendation (UC4)',
+  menu_m5_1: 'Recommendation List per Customer',
+  menu_m5_2: 'Recommendation Status',
+  menu_m5_3: 'Cold-Start Recommendations',
+  menu_m5_4: 'Recommendation Performance',
+  menu_m5_5: 'Product Configuration',
+
+  // Menu 6: Unified Customer Profile
+  menu_m6: 'Unified Customer Profile',
+  menu_m6_1: 'Customer Overview',
+  menu_m6_2: "Customer's Cluster & Persona",
+  menu_m6_3: 'Churn Score & Drivers',
+  menu_m6_4: 'Profitability & CLV',
+  menu_m6_5: 'Retention Priority Status',
+  menu_m6_6: 'Active Product Recommendations',
+  menu_m6_7: 'Credit Score Summary',
+  menu_m6_8: 'RM Interaction History',
+
+  // Menu 7: Reports & Analytics
+  menu_m7: 'Reports & Analytics',
+  menu_m7_1: 'Monthly Segmentation Report',
+  menu_m7_2: 'Churn & Retention Report',
+  menu_m7_3: 'Portfolio Profitability Report',
+  menu_m7_4: 'Product Recommendation Effectiveness Report',
+  menu_m7_5: 'Export for Management / Regulatory',
+
+  // Menu 8: System Settings
+  menu_m8: 'System Settings',
+  menu_m8_1: 'Model Parameters per UC',
+  menu_m8_2: 'Batch Processing Schedule',
+  menu_m8_3: 'Recommended Product Configuration',
+  menu_m8_4: 'User Management',
+  menu_m8_4a: 'Create New User',
+  menu_m8_4b: 'Delete User',
+  menu_m8_4c: 'Assign Role',
+  menu_m8_4d: 'Reset Password',
+  menu_m8_4e: 'User Activity Log',
+  menu_m8_5: 'Role Management',
+  menu_m8_6: 'Menu Management',
+  menu_m8_7: 'Change Password',
+  menu_m8_8: 'System Integration & Monitoring',
+  menu_m8_9: 'System Audit Log',
+  menu_m8_10: 'Edit Profile',
+  menu_m8_11: 'System Parameter',
+
+  // Role Management
+  role_title: 'Role Management',
+  role_subtitle: 'List of roles available in the system',
+  role_name: 'Role Name',
+  role_description: 'Description',
+  role_actions: 'Actions',
+  role_add: 'Add Role',
+  role_detail: 'Role Detail',
+  role_edit: 'Edit Role',
+  role_delete_confirm: 'Are you sure you want to delete this role?',
+  role_loading: 'Loading roles...',
+  role_access_denied: 'Access denied. You do not have permission to view roles.',
+  role_session_expired: 'Session expired. Please login again.',
+  role_save: 'Save',
+  role_cancel: 'Cancel',
+  role_close: 'Close',
+  role_delete: 'Delete',
+  role_confirm_delete: 'Confirm Delete',
+  role_search: 'Search roles...',
+  role_page_info: 'Page {page} of {total}',
+  role_prev: 'Previous',
+  role_next: 'Next',
+
+  // User Management
+  user_title: 'User Management',
+  user_subtitle: 'List of users registered in the system',
+  user_username: 'Username',
+  user_fullname: 'Full Name',
+  user_email: 'Email',
+  user_phone: 'Phone Number',
+  user_firstname: 'First Name',
+  user_lastname: 'Last Name',
+  user_password: 'Password',
+  user_actions: 'Actions',
+  user_add: 'Add User',
+  user_detail: 'User Detail',
+  user_edit: 'Edit User',
+  user_delete_confirm: 'Are you sure you want to delete this user?',
+  user_loading: 'Loading users...',
+  user_search: 'Search users...',
+  user_save: 'Save',
+  user_cancel: 'Cancel',
+  user_close: 'Close',
+
+  // Login
+  login_title: 'Login',
+  login_subtitle: 'Sign in to ANVAIA Dashboard',
+  login_username: 'Username',
+  login_password: 'Password',
+  login_button: 'Login',
+  login_loading: 'Processing...',
+  login_placeholder_username: 'Enter username',
+  login_placeholder_password: 'Enter password',
+};
+
+export default en;

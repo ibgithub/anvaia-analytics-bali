@@ -1,0 +1,150 @@
+// Bahasa Indonesia resource file
+const id = {
+  lang: 'id',
+  langLabel: 'Bahasa Indonesia',
+
+  // App
+  appName: 'ANVAIA',
+  appTagline: 'Analytics Dashboard',
+  logout: 'Keluar',
+  language: 'Bahasa',
+
+  // Menu 1: Dashboard Eksekutif
+  menu_m1: 'Dashboard Eksekutif',
+  menu_m1_1: 'Ringkasan Portofolio',
+  menu_m1_2: 'Churn Distribution (Semua Cabang)',
+  menu_m1_3: 'Ringkasan Segmentasi',
+  menu_m1_4: 'Produk Terlaris dari Rekomendasi Hari Ini',
+  menu_m1_5: 'Alert Prioritas Lintas UC',
+  menu_m1_6: 'Demografi & Persebaran Nasabah',
+
+  // Menu 2: Segmentasi Nasabah (UC1)
+  menu_m2: 'Segmentasi Nasabah (UC1)',
+  menu_m2_1: 'Peta Cluster',
+  menu_m2_2: 'Persona Setiap Cluster',
+  menu_m2_3: 'Karakteristik Setiap Cluster',
+  menu_m2_4: 'Daftar Anggota Cluster',
+  menu_m2_5: 'Tren Pergerakan Antar Cluster',
+
+  // Menu 3: Churn Prediction (UC2)
+  menu_m3: 'Churn Prediction (UC2)',
+  menu_m3_1: 'Watchlist Churn',
+  menu_m3_2: 'Distribusi Churn Score',
+  menu_m3_3: 'Nasabah Skor Memburuk',
+  menu_m3_4: 'Detail Faktor Penyebab + Rekomendasi Retensi',
+  menu_m3_5: 'Riwayat Tindakan Retensi',
+
+  // Menu 4: Customer Profitability (UC3)
+  menu_m4: 'Customer Profitability (UC3)',
+  menu_m4_1: 'Ranking Profitabilitas',
+  menu_m4_2: 'Matrix Prioritas Retensi — 3 Tingkat',
+  menu_m4_2a: 'Hi Priority (Hi-Profit × Hi-Churn)',
+  menu_m4_2b: 'Med Priority (Hi-Profit × Med-Churn)',
+  menu_m4_2c: 'Low Priority (Med-Profit × Hi-Churn)',
+  menu_m4_3: 'Kelompok Persona per Tingkat Prioritas + Strategi Bisnis',
+  menu_m4_4: 'Breakdown Komponen Profitabilitas',
+  menu_m4_5: 'Tren Profitabilitas per Segmen',
+  menu_m4_6: 'Proyeksi CLV',
+
+  // Menu 5: Rekomendasi Produk (UC4)
+  menu_m5: 'Rekomendasi Produk (UC4)',
+  menu_m5_1: 'Daftar Rekomendasi per Nasabah',
+  menu_m5_2: 'Status Rekomendasi',
+  menu_m5_3: 'Cold-Start Recommendations',
+  menu_m5_4: 'Performance Rekomendasi',
+  menu_m5_5: 'Konfigurasi Produk',
+
+  // Menu 6: Profil Nasabah Terpadu
+  menu_m6: 'Profil Nasabah Terpadu',
+  menu_m6_1: 'Ikhtisar Nasabah',
+  menu_m6_2: 'Cluster & Persona Nasabah Ini',
+  menu_m6_3: 'Churn Score & Faktor',
+  menu_m6_4: 'Profitabilitas & CLV',
+  menu_m6_5: 'Status Prioritas Retensi',
+  menu_m6_6: 'Rekomendasi Produk Aktif',
+  menu_m6_7: 'Ringkasan Skor Kredit',
+  menu_m6_8: 'Riwayat Interaksi RM',
+
+  // Menu 7: Laporan & Analitik
+  menu_m7: 'Laporan & Analitik',
+  menu_m7_1: 'Laporan Segmentasi Bulanan',
+  menu_m7_2: 'Laporan Churn & Retensi',
+  menu_m7_3: 'Laporan Profitabilitas Portofolio',
+  menu_m7_4: 'Laporan Efektivitas Rekomendasi Produk',
+  menu_m7_5: 'Ekspor untuk Manajemen / Regulasi',
+
+  // Menu 8: Pengaturan Sistem
+  menu_m8: 'Pengaturan Sistem',
+  menu_m8_1: 'Parameter Model per UC',
+  menu_m8_2: 'Jadwal Batch Processing',
+  menu_m8_3: 'Konfigurasi Produk Rekomendasi',
+  menu_m8_4: 'Manajemen Pengguna',
+  menu_m8_4a: 'Buat Pengguna Baru',
+  menu_m8_4b: 'Hapus Pengguna',
+  menu_m8_4c: 'Tetapkan Peran',
+  menu_m8_4d: 'Reset Kata Sandi',
+  menu_m8_4e: 'Log Aktivitas Pengguna',
+  menu_m8_5: 'Manajemen Role',
+  menu_m8_6: 'Manajemen Menu',
+  menu_m8_7: 'Ganti Password',
+  menu_m8_8: 'Integrasi Sistem & Monitoring',
+  menu_m8_9: 'Audit Log Sistem',
+  menu_m8_10: 'Edit Profil',
+  menu_m8_11: 'Parameter Sistem',
+
+  // Role Management
+  role_title: 'Manajemen Role',
+  role_subtitle: 'Daftar role yang tersedia dalam sistem',
+  role_name: 'Nama Role',
+  role_description: 'Deskripsi',
+  role_actions: 'Aksi',
+  role_add: 'Tambah Role',
+  role_detail: 'Detail Role',
+  role_edit: 'Edit Role',
+  role_delete_confirm: 'Yakin ingin menghapus role ini?',
+  role_loading: 'Memuat data role...',
+  role_access_denied: 'Akses ditolak. Anda tidak memiliki izin untuk melihat data role.',
+  role_session_expired: 'Sesi telah berakhir. Silakan login kembali.',
+  role_save: 'Simpan',
+  role_cancel: 'Batal',
+  role_close: 'Tutup',
+  role_delete: 'Hapus',
+  role_confirm_delete: 'Konfirmasi Hapus',
+  role_search: 'Cari role...',
+  role_page_info: 'Halaman {page} dari {total}',
+  role_prev: 'Sebelumnya',
+  role_next: 'Selanjutnya',
+
+  // User Management
+  user_title: 'Manajemen Pengguna',
+  user_subtitle: 'Daftar pengguna yang terdaftar dalam sistem',
+  user_username: 'Username',
+  user_fullname: 'Nama Lengkap',
+  user_email: 'Email',
+  user_phone: 'No. Telepon',
+  user_firstname: 'Nama Depan',
+  user_lastname: 'Nama Belakang',
+  user_password: 'Password',
+  user_actions: 'Aksi',
+  user_add: 'Tambah User',
+  user_detail: 'Detail User',
+  user_edit: 'Edit User',
+  user_delete_confirm: 'Yakin ingin menghapus user ini?',
+  user_loading: 'Memuat data user...',
+  user_search: 'Cari user...',
+  user_save: 'Simpan',
+  user_cancel: 'Batal',
+  user_close: 'Tutup',
+
+  // Login
+  login_title: 'Login',
+  login_subtitle: 'Masuk ke Dashboard ANVAIA',
+  login_username: 'Username',
+  login_password: 'Password',
+  login_button: 'Login',
+  login_loading: 'Memproses...',
+  login_placeholder_username: 'Masukkan username',
+  login_placeholder_password: 'Masukkan password',
+};
+
+export default id;
