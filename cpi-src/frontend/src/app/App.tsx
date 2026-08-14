@@ -4,6 +4,9 @@ import { Login } from './pages/Login';
 import { I18nProvider } from './i18n/I18nProvider';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { CorporateInsight } from './pages/CorporateInsight';
+import { ChurnOverview } from './pages/ChurnOverview';
+import { ChurnRanking } from './pages/ChurnRanking';
+import { CpiMatrix } from './pages/CpiMatrix';
 import { RoleManagement } from './pages/RoleManagement';
 import { UserManagement } from './pages/UserManagement';
 import { ChangePassword } from './pages/ChangePassword';
@@ -42,8 +45,8 @@ const router = createBrowserRouter([
       { path: 'corporate-insight/overview', element: <CorporateInsight /> },
 
       // 2. Churn Analysis
-      { path: 'churn/overview', element: <PlaceholderPage menuKey="menu_ch_01" /> },
-      { path: 'churn/ranking', element: <PlaceholderPage menuKey="menu_ch_02" /> },
+      { path: 'churn/overview', element: <ChurnOverview /> },
+      { path: 'churn/ranking', element: <ChurnRanking /> },
       { path: 'churn/model-performance', element: <PlaceholderPage menuKey="menu_ch_03" /> },
 
       // 3. Customer Profitability
@@ -58,7 +61,7 @@ const router = createBrowserRouter([
       { path: 'segmentation/model-performance', element: <PlaceholderPage menuKey="menu_cs_04" /> },
 
       // 5. CPI Matrix
-      { path: 'cpi-matrix/overview', element: <PlaceholderPage menuKey="menu_cpi_01" /> },
+      { path: 'cpi-matrix/overview', element: <CpiMatrix /> },
       { path: 'cpi-matrix/hot-target', element: <PlaceholderPage menuKey="menu_cpi_02" /> },
 
       // 6. Recommender System
