@@ -11,8 +11,8 @@ export default defineConfig({
     },
   },
   server: {
-    host: true,
-    allowedHosts: ['anvaia-bali.teman-umkm.com', '.teman-umkm.com', 'localhost', '127.0.0.1'],
+    host: '0.0.0.0',
+    allowedHosts: true,
     proxy: {
       '/api/v1/executive': {
         target: 'http://localhost:8082',
@@ -25,8 +25,8 @@ export default defineConfig({
     },
   },
   preview: {
-    host: true,
-    allowedHosts: ['anvaia-bali.teman-umkm.com', '.teman-umkm.com', 'localhost', '127.0.0.1'],
+    host: '0.0.0.0',
+    allowedHosts: true,
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
 });
