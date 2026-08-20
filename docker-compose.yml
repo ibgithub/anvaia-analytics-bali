@@ -1,7 +1,7 @@
 services:
   auth-service:
     build:
-      context: ./cpi-src/backend/auth-service
+      context: ./backend/auth-service
       dockerfile: Dockerfile
     container_name: cpi-auth-service
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
 
   executive-service:
     build:
-      context: ./cpi-src/backend/executive-service
+      context: ./backend/executive-service
       dockerfile: Dockerfile
     container_name: cpi-executive-service
     restart: unless-stopped
@@ -44,7 +44,7 @@ services:
 
   frontend:
     build:
-      context: ./cpi-src/frontend
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: cpi-frontend
     restart: unless-stopped

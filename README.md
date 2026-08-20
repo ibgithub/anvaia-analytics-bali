@@ -18,22 +18,23 @@ Pipeline analitik CPI terdiri atas 8 proses utama:
 
 ```
 CPI/
-├── 2. CPI_DSI_Board_Presentation 11 bahasa - UI.pdf  # Paparan slide arsitektur solusi 8 proses (P1-P8)
-├── CPI_WebApp_Tahap-01_Spec.md                       # Dokumen spesifikasi fungsional Tahap-01
-├── CPI_WebApp_Sitemap.html                           # Sitemap & diagram alur navigasi aplikasi
-├── CPI_WebApp_Mockup.html                            # Mockup UI interaktif aplikasi CPI
+├── backend/                                          # Service backend (Spring Boot)
+│   ├── auth-service/                             # Service autentikasi, RBAC & manajemen user
+│   │   ├── Dockerfile                            # Dockerfile auth-service
+│   │   └── src/main/resources/db/migration/      # Flyway SQL migrations (V1, V2, dst.)
+│   └── executive-service/                        # Service analitik & executive portfolio
+│       └── Dockerfile                            # Dockerfile executive-service
+├── frontend/                                         # Web client (React + Vite + TypeScript + Tailwind)
+│   ├── Dockerfile                                # Multi-stage build + Nginx
+│   └── nginx.conf                                # Nginx reverse proxy & static routing
+├── docs/                                             # Dokumentasi & spesifikasi proyek
+│   ├── 2. CPI_DSI_Board_Presentation 11 bahasa - UI.pdf  # Paparan slide arsitektur solusi 8 proses (P1-P8)
+│   ├── CPI_WebApp_Tahap-01_Spec.md                       # Dokumen spesifikasi fungsional Tahap-01
+│   ├── CPI_WebApp_Sitemap.html                           # Sitemap & diagram alur navigasi aplikasi
+│   └── CPI_WebApp_Mockup.html                            # Mockup UI interaktif aplikasi CPI
 ├── docker-compose.yml                                # Multi-container orchestration (Auth, Exec, Frontend/Nginx)
 ├── .env.example                                      # Template konfigurasi environment & database
-└── cpi-src/                                          # Source code aplikasi
-    ├── backend/
-    │   ├── auth-service/                             # Service autentikasi, RBAC & manajemen user
-    │   │   ├── Dockerfile                            # Dockerfile auth-service
-    │   │   └── src/main/resources/db/migration/      # Flyway SQL migrations (V1, V2, dst.)
-    │   └── executive-service/                        # Service analitik & executive portfolio
-    │       └── Dockerfile                            # Dockerfile executive-service
-    └── frontend/                                     # Web client (React + Vite + TypeScript + Tailwind)
-        ├── Dockerfile                                # Multi-stage build + Nginx
-        └── nginx.conf                                # Nginx reverse proxy & static routing
+└── README.md
 ```
 
 ---
@@ -69,21 +70,21 @@ git pull && docker compose up -d --build
 ### 1. Menjalankan Backend Services
 * **Auth Service**:
   ```bash
-  cd cpi-src/backend/auth-service
+  cd backend/auth-service
   ./mvnw spring-boot:run
   ```
   *(Port: `8081` — Flyway otomatis berjalan)*
 
 * **Executive Service**:
   ```bash
-  cd cpi-src/backend/executive-service
+  cd backend/executive-service
   ./mvnw spring-boot:run
   ```
   *(Port: `8082`)*
 
 ### 2. Menjalankan Frontend
 ```bash
-cd cpi-src/frontend
+cd frontend
 npm install
 npm run dev
 ```
