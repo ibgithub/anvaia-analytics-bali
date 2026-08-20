@@ -5,9 +5,9 @@ spring:
   application:
     name: executive-service
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:cpi}}
-    username: ${DB_USER:ml_user}
-    password: ${DB_PASSWORD:ml_user}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:anvaia-bali}}
+    username: ${DB_USER:anvaia}
+    password: ${DB_PASSWORD:anvaia}
 
 jwt:
   secret: ${JWT_SECRET:my-super-secret-key-minimum-32-bytes!!!}
