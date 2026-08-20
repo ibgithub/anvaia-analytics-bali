@@ -9,6 +9,8 @@ import { ChurnRanking } from './pages/ChurnRanking';
 import { CpiMatrix } from './pages/CpiMatrix';
 import { ProfitabilityOverview } from './pages/ProfitabilityOverview';
 import { ProfitabilityList } from './pages/ProfitabilityList';
+import { ProfitabilityModelPerformance } from './pages/ProfitabilityModelPerformance';
+import { ChurnModelPerformance } from './pages/ChurnModelPerformance';
 import { SegmentationOverview } from './pages/SegmentationOverview';
 import { RoleManagement } from './pages/RoleManagement';
 import { UserManagement } from './pages/UserManagement';
@@ -50,12 +52,12 @@ const router = createBrowserRouter([
       // 2. Churn Analysis
       { path: 'churn/overview', element: <ChurnOverview /> },
       { path: 'churn/ranking', element: <ChurnRanking /> },
-      { path: 'churn/model-performance', element: <PlaceholderPage menuKey="menu_ch_03" /> },
+      { path: 'churn/model-performance', element: <ChurnModelPerformance /> },
 
       // 3. Customer Profitability
       { path: 'profitability/overview', element: <ProfitabilityOverview /> },
       { path: 'profitability/list', element: <ProfitabilityList /> },
-      { path: 'profitability/model-performance', element: <PlaceholderPage menuKey="menu_cp_03" /> },
+      { path: 'profitability/model-performance', element: <ProfitabilityModelPerformance /> },
 
       // 4. Customer Segmentation
       { path: 'segmentation/overview', element: <SegmentationOverview /> },
