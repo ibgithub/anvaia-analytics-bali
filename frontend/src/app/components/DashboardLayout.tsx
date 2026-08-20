@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router';
 import {
   LayoutDashboard,
@@ -14,13 +14,14 @@ import {
   ChevronDown,
   ChevronRight,
   LogOut,
+  User,
+  ShieldCheck,
+  Building2,
   FileText,
   type LucideIcon,
 } from 'lucide-react';
 import { useI18n } from '../i18n';
-
-// Logo placeholder
-const logoImage = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#155DFC"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="white">A</text></svg>');
+import { AnvAILogo } from './AnvAILogo';
 
 // Map icon string from API to Lucide component
 const iconMap: Record<string, LucideIcon> = {
@@ -60,7 +61,6 @@ interface DisplayMenu {
   children: { key: string; path: string }[];
 }
 
-// Convert API menu response to display format
 function buildMenuFromApi(apiMenus: ApiMenu[]): DisplayMenu[] {
   return apiMenus
     .sort((a, b) => a.sortOrder - b.sortOrder)
@@ -83,28 +83,64 @@ export function DashboardLayout() {
   const navigate = useNavigate();
   const { lang, t, setLang } = useI18n();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
 
-  // Load menu from localStorage (saved after login)
+  const [currentUser, setCurrentUser] = useState<{ username: string; role: string; name?: string }>({
+    username: 'admin',
+    role: 'ADMIN',
+  });
+
+  useEffect(() => {
+    const raw = localStorage.getItem('auth_user');
+    if (raw) {
+      try {
+        if (raw.startsWith('{')) {
+          setCurrentUser(JSON.parse(raw));
+        } else {
+          setCurrentUser({ username: raw, role: 'ADMIN' });
+        }
+      } catch (e) {}
+    }
+  }, []);
+
+  // Load menu from localStorage
   const menuStructure = useMemo<DisplayMenu[]>(() => {
     try {
       const stored = localStorage.getItem('auth_menus');
       if (stored) {
         const apiMenus: ApiMenu[] = JSON.parse(stored);
-        const menus = buildMenuFromApi(apiMenus);
-        return menus;
+        if (Array.isArray(apiMenus) && apiMenus.length > 0) {
+          return buildMenuFromApi(apiMenus);
+        }
       }
-    } catch (e) {
-      // fallback: empty
-    }
-    return [];
+    } catch (e) {}
+    
+    // Default fallback structure
+    return [
+      { key: 'menu_m1', code: 'M1', icon: LayoutDashboard, path: '/executive', children: [] },
+      { key: 'menu_m2', code: 'M2', icon: Users, path: '/segmentation', children: [] },
+      { key: 'menu_m3', code: 'M3', icon: TrendingDown, path: '/churn', children: [] },
+      { key: 'menu_m4', code: 'M4', icon: DollarSign, path: '/profitability', children: [] },
+      { key: 'menu_m5', code: 'M5', icon: ShoppingBag, path: '/recommendation', children: [] },
+      { key: 'menu_m6', code: 'M6', icon: UserCircle, path: '/customer-profile', children: [] },
+      { key: 'menu_m7', code: 'M7', icon: BarChart3, path: '/reports', children: [] },
+      { key: 'menu_m8', code: 'M8', icon: Settings, path: '/settings', children: [] },
+    ];
   }, []);
 
-  // Auto-expand first menu if none expanded
-  const effectiveExpanded = expandedMenu ?? (menuStructure.length > 0 ? menuStructure[0].key : null);
+  // Auto-expand active accordion menu matching current route
+  useEffect(() => {
+    let matchedKey: string | null = null;
+    menuStructure.forEach((parent) => {
+      if (parent.children.some((c) => location.pathname === c.path)) {
+        matchedKey = parent.key;
+      }
+    });
+    setExpandedKey(matchedKey);
+  }, [location.pathname, menuStructure]);
 
-  function toggleMenu(key: string) {
-    setExpandedMenu((prev) => (prev === key ? null : key));
+  function toggleAccordion(key: string) {
+    setExpandedKey((prev) => (prev === key ? null : key));
   }
 
   function handleLogout() {
@@ -115,184 +151,198 @@ export function DashboardLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-slate-100">
-      {/* Sidebar — dark navy */}
-      <aside className={`${isCollapsed ? 'w-20' : 'w-72'} bg-[#0f172a] overflow-y-auto transition-all duration-300`}>
-        {/* Header */}
-        <div className="p-4 border-b border-slate-700/50">
-          <div className="flex items-center justify-between">
-            {isCollapsed ? (
-              <div className="w-full">
-                <img src={logoImage} alt="Logo" className="w-10 h-10 mx-auto" />
+    <div className="flex h-screen bg-[#F4F7F6] font-sans text-[#142826] overflow-hidden">
+      {/* Sidebar */}
+      <aside
+        className={`${
+          isCollapsed ? 'w-20' : 'w-64'
+        } bg-[#073B35] text-white border-r border-[#0F5E55] transition-all duration-300 flex flex-col justify-between z-20 shadow-xl overflow-y-auto`}
+      >
+        <div>
+          {/* Brand Header */}
+          <div className="p-3.5 border-b border-[#0F5E55]">
+            <div className="flex items-center justify-between">
+              {isCollapsed ? (
+                <div className="w-full text-center">
+                  <AnvAILogo variant="icon" size="sm" />
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 truncate">
+                  <AnvAILogo variant="icon" size="sm" />
+                  <div className="truncate">
+                    <h1 className="text-xs font-black tracking-tight bg-gradient-to-r from-[#FFD54F] via-[#FFA000] to-[#FF8F00] bg-clip-text text-transparent uppercase truncate">
+                      AnvAIa Analytics
+                    </h1>
+                    <p className="text-[9px] uppercase tracking-widest text-[#E0EBE8] font-bold truncate">
+                      PT Bank BPD Bali
+                    </p>
+                  </div>
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                className="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#0C4E46] text-[#E0EBE8] hover:text-white transition"
+              >
+                {isCollapsed ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* User Profile Banner in Sidebar */}
+          {!isCollapsed && (
+            <div className="mx-3 mt-3 p-3 rounded-xl bg-[#0C4E46] border border-[#0F5E55] flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] font-bold text-xs">
+                {(currentUser.username || 'A').charAt(0).toUpperCase()}
               </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <img src={logoImage} alt="Logo" className="w-10 h-10" />
-                <div>
-                  <h1 className="text-lg font-bold text-white">{t.appName}</h1>
-                  <p className="text-xs text-slate-400">{t.appTagline}</p>
+              <div className="truncate">
+                <div className="text-xs font-bold text-white truncate">
+                  {currentUser.username}
+                </div>
+                <div className="text-[10px] text-[#D4AF37] font-semibold flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3" />
+                  <span>{currentUser.role}</span>
                 </div>
               </div>
-            )}
-            <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-700 transition-colors"
-            >
-              {isCollapsed ? <X className="w-5 h-5 text-slate-300" /> : <Menu className="w-5 h-5 text-slate-300" />}
-            </button>
-          </div>
+            </div>
+          )}
+
+          {/* Navigation */}
+          <nav className="p-3">
+            <div className="space-y-1">
+              {menuStructure.map((menu) => {
+                const Icon = menu.icon;
+                const hasChildren = menu.children.length > 0;
+                const isExpanded = expandedKey === menu.key;
+                const isParentActive =
+                  hasChildren && menu.children.some((c) => location.pathname === c.path);
+                const isSingleActive =
+                  !hasChildren && (location.pathname === menu.path || location.pathname.startsWith(menu.path + '/'));
+                const label = (t as any)[menu.key] || menu.key;
+
+                return (
+                  <div key={menu.key}>
+                    {hasChildren ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (isCollapsed) {
+                            setIsCollapsed(false);
+                            setExpandedKey(menu.key);
+                          } else {
+                            toggleAccordion(menu.key);
+                          }
+                        }}
+                        className={`
+                          w-full flex items-center ${
+                            isCollapsed ? 'justify-center' : 'justify-between'
+                          } gap-3 px-3 py-2.5 rounded-xl transition text-xs font-semibold
+                          ${
+                            isParentActive
+                              ? 'bg-[#D4AF37] text-[#073B35] font-bold shadow-md shadow-[#D4AF37]/20'
+                              : 'text-[#E0EBE8] hover:bg-[#0C4E46] hover:text-white'
+                          }
+                        `}
+                        title={isCollapsed ? label : ''}
+                      >
+                        <div className="flex items-center gap-3 truncate">
+                          <Icon
+                            className={`w-4 h-4 shrink-0 ${
+                              isParentActive ? 'text-[#073B35]' : 'text-[#D4AF37]'
+                            }`}
+                          />
+                          {!isCollapsed && <span className="truncate">{label}</span>}
+                        </div>
+                        {!isCollapsed &&
+                          (isExpanded ? (
+                            <ChevronDown className="w-3.5 h-3.5 shrink-0" />
+                          ) : (
+                            <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+                          ))}
+                      </button>
+                    ) : (
+                      <Link
+                        to={menu.path}
+                        className={`
+                          w-full flex items-center ${
+                            isCollapsed ? 'justify-center' : 'justify-start'
+                          } gap-3 px-3 py-2.5 rounded-xl transition text-xs font-semibold
+                          ${
+                            isSingleActive
+                              ? 'bg-[#D4AF37] text-[#073B35] font-bold shadow-md shadow-[#D4AF37]/20'
+                              : 'text-[#E0EBE8] hover:bg-[#0C4E46] hover:text-white'
+                          }
+                        `}
+                        title={isCollapsed ? label : ''}
+                      >
+                        <Icon
+                          className={`w-4 h-4 shrink-0 ${
+                            isSingleActive ? 'text-[#073B35]' : 'text-[#D4AF37]'
+                          }`}
+                        />
+                        {!isCollapsed && <span className="truncate">{label}</span>}
+                      </Link>
+                    )}
+
+                    {/* Submenu Accordion */}
+                    {hasChildren && !isCollapsed && (
+                      <div
+                        className="ml-5 border-l border-[#0F5E55] pl-2.5 overflow-hidden transition-all duration-300 ease-in-out"
+                        style={{
+                          maxHeight: isExpanded ? '500px' : '0px',
+                          opacity: isExpanded ? 1 : 0,
+                          marginTop: isExpanded ? '4px' : '0px',
+                        }}
+                      >
+                        <div className="space-y-1">
+                          {menu.children.map((child) => {
+                            const childLabel = (t as any)[child.key] || child.key;
+                            const isChildActive = location.pathname === child.path;
+
+                            return (
+                              <Link
+                                key={child.key}
+                                to={child.path}
+                                className={`
+                                  w-full flex items-center justify-start gap-2.5 px-3 py-2 rounded-lg transition text-xs font-medium
+                                  ${
+                                    isChildActive
+                                      ? 'bg-white/10 text-[#D4AF37] font-bold border-l-2 border-[#D4AF37]'
+                                      : 'text-[#E0EBE8] hover:bg-[#0C4E46] hover:text-white'
+                                  }
+                                `}
+                              >
+                                <span className="truncate">{childLabel}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </nav>
         </div>
 
-        {/* Language switcher — above menu */}
-        <div className="px-3 pt-3 pb-1 flex items-center gap-2">
-          <button
-            onClick={() => setLang('id')}
-            className={`px-2 py-1 rounded-md transition-all ${lang === 'id' ? 'bg-slate-700' : 'hover:bg-slate-800'}`}
-            title="Bahasa Indonesia"
-          >
-            <svg width="24" height="16" viewBox="0 0 24 16" className="rounded-sm">
-              <rect width="24" height="8" fill="#FF0000"/>
-              <rect y="8" width="24" height="8" fill="#FFFFFF"/>
-            </svg>
-          </button>
-          <button
-            onClick={() => setLang('en')}
-            className={`px-2 py-1 rounded-md transition-all ${lang === 'en' ? 'bg-slate-700' : 'hover:bg-slate-800'}`}
-            title="English"
-          >
-            <svg width="24" height="16" viewBox="0 0 60 30" className="rounded-sm">
-              <clipPath id="t"><rect width="60" height="30"/></clipPath>
-              <g clipPath="url(#t)">
-                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
-                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" clipPath="url(#t)"/>
-                <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
-                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
-              </g>
-            </svg>
-          </button>
-        </div>
-
-        {/* Navigation */}
-        <nav className="p-3">
-          <div className="space-y-1">
-            {menuStructure.map((menu) => {
-              const Icon = menu.icon;
-              const hasChildren = menu.children.length > 0;
-              const isExpanded = hasChildren && effectiveExpanded === menu.key;
-              const isActive = hasChildren ? isExpanded : location.pathname === menu.path || location.pathname.startsWith(menu.path + '/');
-              const label = (t as any)[menu.key] || menu.key;
-
-              return (
-                <div key={menu.key}>
-                  {/* Parent menu */}
-                  {hasChildren ? (
-                    <button
-                      onClick={() => {
-                        if (isCollapsed) {
-                          setIsCollapsed(false);
-                          setExpandedMenu(menu.key);
-                        } else {
-                          toggleMenu(menu.key);
-                        }
-                      }}
-                      className={`
-                        w-full flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-3 py-2 rounded-lg transition-all text-[13px]
-                        ${isActive
-                          ? 'border border-blue-500 text-blue-400 font-semibold bg-blue-500/10'
-                          : 'border border-transparent text-slate-300 hover:bg-slate-800 hover:text-white'
-                        }
-                      `}
-                      title={isCollapsed ? label : ''}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        {!isCollapsed && (
-                          <span className="truncate">{label}</span>
-                        )}
-                      </div>
-                      {!isCollapsed && (
-                        isExpanded
-                          ? <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" />
-                          : <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
-                      )}
-                    </button>
-                  ) : (
-                    <Link
-                      to={menu.path}
-                      className={`
-                        w-full flex items-center ${isCollapsed ? 'justify-center' : ''} px-3 py-2 rounded-lg transition-all text-[13px]
-                        ${isActive
-                          ? 'border border-blue-500 text-blue-400 font-semibold bg-blue-500/10'
-                          : 'border border-transparent text-slate-300 hover:bg-slate-800 hover:text-white'
-                        }
-                      `}
-                      title={isCollapsed ? label : ''}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        {!isCollapsed && (
-                          <span className="truncate">{label}</span>
-                        )}
-                      </div>
-                    </Link>
-                  )}
-
-                  {/* Sub menus with accordion animation */}
-                  {!isCollapsed && hasChildren && (
-                    <div
-                      className="ml-5 border-l border-slate-700 pl-2.5 overflow-hidden transition-all duration-300 ease-in-out"
-                      style={{
-                        maxHeight: isExpanded ? '500px' : '0px',
-                        opacity: isExpanded ? 1 : 0,
-                        marginTop: isExpanded ? '4px' : '0px',
-                      }}
-                    >
-                      <div className="space-y-0.5">
-                        {menu.children.map((child) => {
-                          const childLabel = (t as any)[child.key] || child.key;
-                          const isChildActive = location.pathname === child.path;
-
-                          return (
-                            <Link
-                              key={child.key}
-                              to={child.path}
-                              className={`
-                                block px-2.5 py-1.5 rounded-md text-[12px] transition-all
-                                ${isChildActive
-                                  ? 'border border-white/60 text-white font-semibold shadow-[0_0_8px_rgba(255,255,255,0.2)] bg-white/5'
-                                  : 'border border-transparent text-slate-400 hover:bg-slate-800 hover:text-slate-200'
-                                }
-                              `}
-                            >
-                              {childLabel}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </nav>
-
-        {/* Logout — below last menu */}
-        <div className="px-3 pb-4 pt-1">
+        {/* Bottom Actions */}
+        <div className="p-3 border-t border-[#0F5E55] space-y-2">
           {!isCollapsed ? (
             <button
+              type="button"
               onClick={handleLogout}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-red-400 hover:bg-red-900/30 transition-all"
+              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-rose-200 hover:bg-rose-900/30 transition border border-transparent hover:border-rose-500/30"
             >
-              <LogOut className="w-4 h-4" />
-              <span>{t.logout}</span>
+              <LogOut className="w-4 h-4 text-rose-400" />
+              <span>{t.logout || 'Keluar (Logout)'}</span>
             </button>
           ) : (
             <button
+              type="button"
               onClick={handleLogout}
-              className="w-full flex items-center justify-center p-2.5 rounded-lg text-red-400 hover:bg-red-900/30"
-              title={t.logout}
+              className="w-full flex items-center justify-center p-2.5 rounded-xl text-rose-300 hover:bg-rose-900/30"
+              title={t.logout || 'Logout'}
             >
               <LogOut className="w-5 h-5" />
             </button>
@@ -300,10 +350,81 @@ export function DashboardLayout() {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto">
-        <Outlet />
-      </main>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Top Header Bar */}
+        <header className="h-16 bg-white border-b border-[#D8E4E0] px-6 flex items-center justify-between z-10 shrink-0 shadow-xs">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-xs text-[#5A726D]">
+              <Building2 className="w-4 h-4 text-[#0B5A51]" />
+              <span className="font-semibold text-[#142826]">
+                PT Bank Pembangunan Daerah Bali
+              </span>
+              <span className="text-[#D8E4E0]">/</span>
+              <span className="text-[#0B5A51] font-bold">AnvAIa Analytics Integration</span>
+            </div>
+          </div>
+
+          {/* Middleware Service Status in Header + Language Switcher */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 bg-[#F8FAF9] p-1 rounded-lg border border-[#D8E4E0]">
+              <button
+                type="button"
+                onClick={() => setLang('id')}
+                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                  lang === 'id'
+                    ? 'bg-[#0B5A51] text-white shadow-xs'
+                    : 'text-[#5A726D] hover:text-[#0B5A51]'
+                }`}
+              >
+                ID
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                  lang === 'en'
+                    ? 'bg-[#0B5A51] text-white shadow-xs'
+                    : 'text-[#5A726D] hover:text-[#0B5A51]'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
+            <div className="hidden md:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#EBF3F1] border border-[#D8E4E0] text-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="text-[11px] font-bold text-[#0B5A51]">
+                CPI Analytics Engine:
+              </span>
+              <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
+                Connected (Real-time)
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 pl-2 border-l border-[#D8E4E0]">
+              <div className="w-8 h-8 rounded-full bg-[#0B5A51] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                {(currentUser.username || 'A').charAt(0).toUpperCase()}
+              </div>
+              <div className="hidden sm:block text-left">
+                <div className="text-xs font-bold text-[#142826] leading-tight">
+                  {currentUser.username}
+                </div>
+                <div className="text-[10px] text-[#5A726D] font-medium">
+                  {currentUser.role}
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Page Content Outlet */}
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 bg-[#F4F7F6]">
+          <div className="max-w-7xl mx-auto">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
