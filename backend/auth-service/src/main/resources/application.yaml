@@ -5,7 +5,7 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:anvaia-bali}}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:anvaia_bali}}
     username: ${DB_USER:anvaia}
     password: ${DB_PASSWORD:anvaia}
   flyway:
