@@ -18,6 +18,31 @@ import {
 import { useI18n, resolveMessage } from '../i18n';
 import { AnvAILogo } from '../components/AnvAILogo';
 
+// Flag SVG components
+function IndonesiaFlag() {
+  return (
+    <svg width="22" height="15" viewBox="0 0 24 16" className="rounded-sm shrink-0 border border-black/10">
+      <rect width="24" height="8" fill="#FF0000" />
+      <rect y="8" width="24" height="8" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+function GBFlag() {
+  return (
+    <svg width="22" height="15" viewBox="0 0 60 30" className="rounded-sm shrink-0 border border-black/10">
+      <clipPath id="gb-flag-clip"><rect width="60" height="30"/></clipPath>
+      <g clipPath="url(#gb-flag-clip)">
+        <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4"/>
+        <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+        <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+      </g>
+    </svg>
+  );
+}
+
 export function Login() {
   const navigate = useNavigate();
   const { lang, t, setLang } = useI18n();
@@ -27,6 +52,9 @@ export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Type helper for dynamic translation keys
+  const tr = t as any;
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
@@ -50,7 +78,7 @@ export function Login() {
             : `Wrong password, you have ${remaining} attempts remaining`;
           throw new Error(msg);
         }
-        throw new Error(resolveMessage(errData?.message || '', lang) || 'Login gagal. Periksa username & password.');
+        throw new Error(resolveMessage(errData?.message || '', lang) || (lang === 'id' ? 'Login gagal. Periksa username & password.' : 'Login failed. Check username & password.'));
       }
 
       const res = await resp.json();
@@ -93,7 +121,7 @@ export function Login() {
 
       navigate('/', { replace: true });
     } catch (err: any) {
-      setErrorMsg(err.message || 'Gagal terhubung ke server auth-service.');
+      setErrorMsg(err.message || (lang === 'id' ? 'Gagal terhubung ke server auth-service.' : 'Failed to connect to auth-service server.'));
     } finally {
       setIsLoading(false);
     }
@@ -107,38 +135,37 @@ export function Login() {
           <AnvAILogo size="md" />
 
           <div className="flex items-center gap-4 text-xs font-semibold text-[#5A726D]">
-            {/* Language Switcher */}
-            <div className="flex items-center gap-1.5 bg-[#F8FAF9] p-1 rounded-lg border border-[#D8E4E0]">
+            {/* Flag-Based Language Switcher (ID / EN Flags) */}
+            <div className="flex items-center gap-2 bg-[#F8FAF9] p-1.5 rounded-xl border border-[#D8E4E0]">
               <button
                 type="button"
                 onClick={() => setLang('id')}
-                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                className={`p-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                   lang === 'id'
-                    ? 'bg-[#0B5A51] text-white shadow-xs'
-                    : 'text-[#5A726D] hover:text-[#0B5A51]'
+                    ? 'bg-[#0B5A51] text-white shadow-xs ring-1 ring-[#0B5A51]'
+                    : 'hover:bg-white text-[#5A726D]'
                 }`}
+                title="Bahasa Indonesia"
               >
-                ID
+                <IndonesiaFlag />
+                <span className="text-xs font-bold">ID</span>
               </button>
+
               <button
                 type="button"
                 onClick={() => setLang('en')}
-                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                className={`p-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                   lang === 'en'
-                    ? 'bg-[#0B5A51] text-white shadow-xs'
-                    : 'text-[#5A726D] hover:text-[#0B5A51]'
+                    ? 'bg-[#0B5A51] text-white shadow-xs ring-1 ring-[#0B5A51]'
+                    : 'hover:bg-white text-[#5A726D]'
                 }`}
+                title="English (UK)"
               >
-                EN
+                <GBFlag />
+                <span className="text-xs font-bold">EN</span>
               </button>
             </div>
 
-            <span className="hidden md:inline text-[#D8E4E0]">|</span>
-
-            <span className="hidden md:flex items-center gap-1.5 text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              CPI Analytics Service: Operational
-            </span>
             <span className="hidden md:inline text-[#D8E4E0]">|</span>
             <span className="hidden md:inline text-[#142826] font-bold">Model Engine v2.5</span>
           </div>
@@ -161,20 +188,20 @@ export function Login() {
                 <AnvAILogo variant="icon" size="sm" />
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-medium text-[#F0E6D2]">
                   <Sparkles className="w-3.5 h-3.5 text-[#FFA726]" />
-                  <span>AnvAIa Analytics ➔ BPD Bali Customer Portal</span>
+                  <span>{tr.login_hero_badge || 'AnvAIa Analytics ➔ BPD Bali Customer Portal'}</span>
                 </div>
               </div>
 
               {/* Title & Subtitle */}
               <div>
                 <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-                  AnvAIa Enterprise <br />
+                  {tr.login_hero_title || 'AnvAIa Enterprise'} <br />
                   <span className="bg-gradient-to-r from-[#FFD54F] via-[#FFA000] to-[#FF8F00] bg-clip-text text-transparent">
-                    CPI Analytics Portal
+                    {tr.login_hero_title_highlight || 'Machine Learning Portal'}
                   </span>
                 </h1>
                 <p className="mt-3 text-sm text-[#E0EBE8] max-w-lg leading-relaxed font-normal">
-                  Portal analitik kecerdasan portofolio nasabah berbasis Machine Learning & AI untuk segmentasi, prediksi churn, estimasi profitabilitas, dan rekomendasi personalisasi.
+                  {tr.login_hero_desc || 'Portal analitik kecerdasan portofolio nasabah berbasis Machine Learning & AI untuk Customer Segmentation, prediksi churn, dan rekomendasi personalisasi.'}
                 </p>
               </div>
 
@@ -183,10 +210,10 @@ export function Login() {
                 <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
                   <div className="text-[11px] font-bold tracking-wider uppercase text-[#FFA726] flex items-center gap-1.5">
                     <Activity className="w-3.5 h-3.5" />
-                    <span>ALUR ANALISIS PORTOFOLIO</span>
+                    <span>{tr.login_pipeline_title || 'ALUR ANALISIS PORTOFOLIO'}</span>
                   </div>
                   <span className="text-[10px] text-white/80 font-mono bg-white/15 px-2 py-0.5 rounded-full">
-                    Real-time Pipeline
+                    {tr.login_pipeline_tag || 'Real-time Pipeline'}
                   </span>
                 </div>
 
@@ -194,20 +221,20 @@ export function Login() {
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center relative">
                   <div className="p-2.5 rounded-xl bg-white/10 border border-white/15">
                     <Layers className="w-4 h-4 text-[#FFA726] mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-white">Data Core</div>
-                    <div className="text-[9px] text-white/70 mt-0.5">Transaksi Nasabah</div>
+                    <div className="text-[11px] font-bold text-white">{tr.login_step_data || 'Data Core'}</div>
+                    <div className="text-[9px] text-white/70 mt-0.5">{tr.login_step_data_sub || 'Transaksi Nasabah'}</div>
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-[#FFA726]/20 border border-[#FFA726]/40 flex flex-col justify-center">
                     <ArrowLeftRight className="w-4 h-4 text-[#FFD54F] mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-[#FFD54F]">CPI Engine</div>
-                    <div className="text-[9px] text-white/80 mt-0.5">ML & Profiling</div>
+                    <div className="text-[11px] font-bold text-[#FFD54F]">{tr.login_step_engine || 'Machine Learning Engine'}</div>
+                    <div className="text-[9px] text-white/80 mt-0.5">{tr.login_step_engine_sub || 'ML & Profiling'}</div>
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-white/10 border border-white/15">
                     <Database className="w-4 h-4 text-emerald-300 mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-white">Analytics Web</div>
-                    <div className="text-[9px] text-white/70 mt-0.5">Dashboard Executive</div>
+                    <div className="text-[11px] font-bold text-white">{tr.login_step_web || 'Analytics Web'}</div>
+                    <div className="text-[9px] text-white/70 mt-0.5">{tr.login_step_web_sub || 'Dashboard Executive'}</div>
                   </div>
                 </div>
               </div>
@@ -216,18 +243,18 @@ export function Login() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                   <CheckCircle2 className="w-4 h-4 text-[#FFA726] mb-1.5" />
-                  <div className="text-xs font-bold text-white">Prediksi Churn</div>
-                  <p className="text-[10px] text-white/70 mt-0.5">Skor Churn Index 0–100</p>
+                  <div className="text-xs font-bold text-white">{tr.login_pillar_churn || 'Prediksi Churn'}</div>
+                  <p className="text-[10px] text-white/70 mt-0.5">{tr.login_pillar_churn_sub || 'Skor Churn Index 0–100'}</p>
                 </div>
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                   <ShieldCheck className="w-4 h-4 text-[#FFA726] mb-1.5" />
-                  <div className="text-xs font-bold text-white">Profitabilitas</div>
-                  <p className="text-[10px] text-white/70 mt-0.5">Estimasi NII 6 bulan</p>
+                  <div className="text-xs font-bold text-white">{tr.login_pillar_segment || 'Customer Segmentation'}</div>
+                  <p className="text-[10px] text-white/70 mt-0.5">{tr.login_pillar_segment_sub || 'Pengelompokan Persona'}</p>
                 </div>
                 <div className="p-3 rounded-xl bg-white/5 border border-white/10">
                   <Database className="w-4 h-4 text-[#FFA726] mb-1.5" />
-                  <div className="text-xs font-bold text-white">Matriks Prioritas</div>
-                  <p className="text-[10px] text-white/70 mt-0.5">9 Kluster Hot Target</p>
+                  <div className="text-xs font-bold text-white">{tr.login_pillar_priority || 'Matriks Prioritas'}</div>
+                  <p className="text-[10px] text-white/70 mt-0.5">{tr.login_pillar_priority_sub || '9 Kluster Hot Target'}</p>
                 </div>
               </div>
             </div>
@@ -244,13 +271,13 @@ export function Login() {
             <div>
               <div className="mb-6">
                 <div className="inline-block px-2.5 py-1 rounded-md bg-[#EBF3F1] text-[#0B5A51] text-[11px] font-bold uppercase tracking-wider mb-2">
-                  Portal Masuk Petugas
+                  {tr.login_portal_badge || 'PORTAL MASUK PETUGAS'}
                 </div>
                 <h2 className="text-2xl font-black text-[#142826] tracking-tight">
-                  Login Administrator
+                  {tr.login_portal_title || 'Login Administrator'}
                 </h2>
                 <p className="text-xs text-[#5A726D] mt-1">
-                  Masuk menggunakan akun terdaftar untuk mengelola analitik CPI.
+                  {tr.login_portal_desc || 'Masuk menggunakan akun terdaftar untuk mengelola analitik Machine Learning.'}
                 </p>
               </div>
 
@@ -264,7 +291,7 @@ export function Login() {
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-[#142826] mb-1.5">
-                    Username
+                    {tr.login_username || 'Username'}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A726D]">
@@ -275,7 +302,7 @@ export function Login() {
                       required
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      placeholder="Masukkan username Anda"
+                      placeholder={tr.login_placeholder_username || 'Masukkan username Anda'}
                       className="w-full pl-10 pr-4 py-2.5 text-xs bg-[#F8FAF9] rounded-xl border border-[#D8E4E0] text-[#142826] focus:outline-none focus:ring-2 focus:ring-[#0B5A51] focus:bg-white transition"
                     />
                   </div>
@@ -283,7 +310,7 @@ export function Login() {
 
                 <div>
                   <label className="block text-xs font-bold text-[#142826] mb-1.5">
-                    Password
+                    {tr.login_password || 'Password'}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A726D]">
@@ -294,7 +321,7 @@ export function Login() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Masukkan password Anda"
+                      placeholder={tr.login_placeholder_password || 'Masukkan password Anda'}
                       className="w-full pl-10 pr-10 py-2.5 text-xs bg-[#F8FAF9] rounded-xl border border-[#D8E4E0] text-[#142826] focus:outline-none focus:ring-2 focus:ring-[#0B5A51] focus:bg-white transition"
                     />
                     <button
@@ -309,10 +336,10 @@ export function Login() {
 
                 <div className="flex items-center justify-between text-xs pt-1">
                   <span className="text-[11px] text-[#5A726D]">
-                    Proteksi Anti Brute-Force Aktif
+                    {tr.login_anti_brute || 'Proteksi Anti Brute-Force Aktif'}
                   </span>
                   <span className="text-[11px] text-[#0B5A51] font-semibold">
-                    v2.5.0 Production
+                    {tr.login_version_tag || 'v2.5.0 Production'}
                   </span>
                 </div>
 
@@ -322,10 +349,10 @@ export function Login() {
                   className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#0B5A51] to-[#073B35] hover:from-[#0E7065] hover:to-[#0B5A51] text-white text-xs font-bold shadow-md shadow-[#0B5A51]/25 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isLoading ? (
-                    <span>Memverifikasi Akun...</span>
+                    <span>{tr.login_verifying || 'Memverifikasi Akun...'}</span>
                   ) : (
                     <>
-                      <span>Masuk ke Dashboard</span>
+                      <span>{tr.login_submit_button || 'Masuk ke Dashboard'}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -334,7 +361,7 @@ export function Login() {
             </div>
 
             <div className="text-center text-[11px] text-[#5A726D] pt-6 border-t border-[#D8E4E0] mt-6">
-              Butuh bantuan teknis? Hubungi <span className="font-semibold text-[#0B5A51]">it-support@bankbpdbali.id</span>
+              {tr.login_help_text || 'Butuh bantuan teknis? Hubungi'} <span className="font-semibold text-[#0B5A51]">it-support@bankbpdbali.id</span>
             </div>
           </div>
         </div>
@@ -342,7 +369,7 @@ export function Login() {
 
       {/* Bottom Footer */}
       <footer className="w-full text-center py-4 text-xs text-[#5A726D] border-t border-[#D8E4E0] bg-white">
-        PT Bank Pembangunan Daerah Bali — Kantor Pusat Jl. Raya Puputan Niti Mandala, Renon, Denpasar, Bali
+        {tr.login_footer_text || 'PT Bank Pembangunan Daerah Bali — Kantor Pusat Jl. Raya Puputan Niti Mandala, Renon, Denpasar, Bali'}
       </footer>
     </div>
   );

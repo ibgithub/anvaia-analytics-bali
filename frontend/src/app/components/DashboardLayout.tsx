@@ -365,41 +365,48 @@ export function DashboardLayout() {
             </div>
           </div>
 
-          {/* Middleware Service Status in Header + Language Switcher */}
+          {/* Language Switcher + User Profile */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 bg-[#F8FAF9] p-1 rounded-lg border border-[#D8E4E0]">
+            <div className="flex items-center gap-2 bg-[#F8FAF9] p-1.5 rounded-xl border border-[#D8E4E0]">
               <button
                 type="button"
                 onClick={() => setLang('id')}
-                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                className={`p-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                   lang === 'id'
-                    ? 'bg-[#0B5A51] text-white shadow-xs'
-                    : 'text-[#5A726D] hover:text-[#0B5A51]'
+                    ? 'bg-[#0B5A51] text-white shadow-xs ring-1 ring-[#0B5A51]'
+                    : 'hover:bg-white text-[#5A726D]'
                 }`}
+                title="Bahasa Indonesia"
               >
-                ID
+                <svg width="20" height="14" viewBox="0 0 24 16" className="rounded-sm shrink-0 border border-black/10">
+                  <rect width="24" height="8" fill="#FF0000" />
+                  <rect y="8" width="24" height="8" fill="#FFFFFF" />
+                </svg>
+                <span className="text-xs font-bold">ID</span>
               </button>
+
               <button
                 type="button"
                 onClick={() => setLang('en')}
-                className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                className={`p-1.5 rounded-lg flex items-center gap-1.5 transition-all ${
                   lang === 'en'
-                    ? 'bg-[#0B5A51] text-white shadow-xs'
-                    : 'text-[#5A726D] hover:text-[#0B5A51]'
+                    ? 'bg-[#0B5A51] text-white shadow-xs ring-1 ring-[#0B5A51]'
+                    : 'hover:bg-white text-[#5A726D]'
                 }`}
+                title="English (UK)"
               >
-                EN
+                <svg width="20" height="14" viewBox="0 0 60 30" className="rounded-sm shrink-0 border border-black/10">
+                  <clipPath id="gb-flag-clip-layout"><rect width="60" height="30"/></clipPath>
+                  <g clipPath="url(#gb-flag-clip-layout)">
+                    <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4"/>
+                    <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+                    <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+                  </g>
+                </svg>
+                <span className="text-xs font-bold">EN</span>
               </button>
-            </div>
-
-            <div className="hidden md:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#EBF3F1] border border-[#D8E4E0] text-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span className="text-[11px] font-bold text-[#0B5A51]">
-                CPI Analytics Engine:
-              </span>
-              <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">
-                Connected (Real-time)
-              </span>
             </div>
 
             <div className="flex items-center gap-2 pl-2 border-l border-[#D8E4E0]">
