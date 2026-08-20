@@ -12,6 +12,9 @@ import { ProfitabilityList } from './pages/ProfitabilityList';
 import { ProfitabilityModelPerformance } from './pages/ProfitabilityModelPerformance';
 import { ChurnModelPerformance } from './pages/ChurnModelPerformance';
 import { SegmentationOverview } from './pages/SegmentationOverview';
+import { SegmentationCharacteristics } from './pages/SegmentationCharacteristics';
+import { SegmentationProductUsage } from './pages/SegmentationProductUsage';
+import { SegmentationModelPerformance } from './pages/SegmentationModelPerformance';
 import { RoleManagement } from './pages/RoleManagement';
 import { UserManagement } from './pages/UserManagement';
 import { ChangePassword } from './pages/ChangePassword';
@@ -61,9 +64,9 @@ const router = createBrowserRouter([
 
       // 4. Customer Segmentation
       { path: 'segmentation/overview', element: <SegmentationOverview /> },
-      { path: 'segmentation/characteristics', element: <PlaceholderPage menuKey="menu_cs_02" /> },
-      { path: 'segmentation/product-usage', element: <PlaceholderPage menuKey="menu_cs_03" /> },
-      { path: 'segmentation/model-performance', element: <PlaceholderPage menuKey="menu_cs_04" /> },
+      { path: 'segmentation/characteristics', element: <SegmentationCharacteristics /> },
+      { path: 'segmentation/product-usage', element: <SegmentationProductUsage /> },
+      { path: 'segmentation/model-performance', element: <SegmentationModelPerformance /> },
 
       // 5. CPI Matrix
       { path: 'cpi-matrix/overview', element: <CpiMatrix /> },
