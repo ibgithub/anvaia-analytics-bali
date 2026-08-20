@@ -17,6 +17,8 @@ export default defineConfig({
     },
   },
   server: {
+    host: true,
+    allowedHosts: true,
     proxy: {
       // Executive service (demographic, portfolio, etc.)
       '/api/v1/executive': {
@@ -29,6 +31,10 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+  preview: {
+    host: true,
+    allowedHosts: true,
   },
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
